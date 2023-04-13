@@ -1,0 +1,37 @@
+import React, { FC } from "react";
+import { Grid } from "@mui/material";
+import classes from "./CardList.module.css";
+import { ICardListProps } from "./ICardListProps";
+import CardListItem from "../CardListItem/CardListItem";
+import CardForm from "../CardForm/CardForm";
+import TopBlock from "../TopBlock/TopBlock";
+
+const CardList: FC<ICardListProps> = ({ cards }) => {
+  const [isOpen, setOpen] = React.useState<boolean>(false);
+  const [cardId, setCardId] = React.useState<string | boolean>('');
+
+  const handleOpen = async (Id: string) => {
+    setOpen(true);
+    setCardId(Id);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+    setCardId(false);
+  };
+
+  return (
+    <div>
+      <TopBlock onOpen={handleOpen}/>
+      <Grid container spacing={2}>
+        {cards.map((card, index) => (
+          <CardListItem key={card.id} card={card} onOpen={handleOpen} />
+        ))}
+      </Grid>
+
+      <CardForm Id={cardId} isOpen={isOpen} onClose={handleClose} />
+    </div>
+  );
+};
+
+export default CardList;

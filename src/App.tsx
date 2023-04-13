@@ -1,25 +1,29 @@
 import React from 'react';
-import logo from './logo.svg';
+import { Container } from "@mui/material";
+import { BrowserRouter, HashRouter, Route, Routes } from 'react-router-dom';
 import './App.css';
+import { routes } from './Routes/routes';
+import TopBar from './components/TopBar/TopBar';
 
 function App() {
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <BrowserRouter>
+        <div>
+          <TopBar />
+          <Container maxWidth="xl">
+            <Routes>
+              {
+                routes.map(({ path, element: Element }) =>
+                  <Route key={path} path={path} element={Element}></Route>
+                )
+              }
+            </Routes>
+          </Container>
+        </div>
+      </BrowserRouter>
+    //</HashRouter>
+
   );
 }
 
