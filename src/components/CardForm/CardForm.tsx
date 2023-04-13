@@ -101,7 +101,7 @@ const CardForm: FC<ICardFormProps> = ({ Id, isOpen, onClose }) => {
           <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="ru">
             <DatePicker
               label="Дата действия"
-              className={classes.datePicker}
+              className={classes.datepicker}
               value={dayjs(card.endDate)}
               onChange={(newValue) => changeDate(newValue, "endDate")}
             />
