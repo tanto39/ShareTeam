@@ -11,7 +11,7 @@ const Cards = () => {
 
   return (
     <div>
-      <Typography variant="h1" fontSize={"2rem"} gutterBottom>
+      <Typography variant="h1" fontSize={"2rem"} component="h1" gutterBottom>
         Потребности
       </Typography>
       <CardList cards={cardListLocal}/>
