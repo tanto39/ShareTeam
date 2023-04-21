@@ -4,5 +4,11 @@ export interface ICard {
   person: string,
   project: string,
   description: string,
-  endDate: string
+  endDate: string,
+  skills: ICardSkill[]
+}
+
+export interface ICardSkill {
+  id: string,
+  name: string
 }
