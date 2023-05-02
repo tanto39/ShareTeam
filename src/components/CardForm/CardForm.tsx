@@ -7,7 +7,7 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  StyledEngineProvider
+  StyledEngineProvider,
 } from "@mui/material";
 import dayjs, { Dayjs } from "dayjs";
 import { DatePicker } from "@mui/x-date-pickers";
@@ -36,11 +36,8 @@ const CardForm: FC<ICardFormProps> = ({ Id, isOpen, onClose }) => {
     setCard({ ...card, [key]: event.target.value });
   };
 
-  const changeCardTags = async (
-    newTags: any[],
-    key: string
-  ) => {
-    setCard({...card, [key]: newTags});
+  const changeCardTags = async (newTags: any[], key: string) => {
+    setCard({ ...card, [key]: newTags });
   };
 
   const changeDate = async (date: Dayjs | null, key: string) => {
@@ -55,6 +52,8 @@ const CardForm: FC<ICardFormProps> = ({ Id, isOpen, onClose }) => {
   useEffect(() => {
     if (Id) {
       setCardFromLocal(Id);
+    } else {
+      setCard({ ...card, skills: [] });
     }
   }, [Id]);
 
@@ -108,20 +107,25 @@ const CardForm: FC<ICardFormProps> = ({ Id, isOpen, onClose }) => {
                 value={card.description}
                 onChange={(event) => changeCardInput(event, "description")}
               />
-              <LocalizationProvider
-                dateAdapter={AdapterDayjs}
-                adapterLocale="ru"
-              >
-                <DatePicker
-                  label="Дата действия"
-                  className={classes.datepicker}
-                  value={dayjs(card.endDate)}
-                  onChange={(newValue) => changeDate(newValue, "endDate")}
+              <div className={classes.datepicker}>
+                <LocalizationProvider
+                  dateAdapter={AdapterDayjs}
+                  adapterLocale="ru"
+                >
+                  <DatePicker
+                    label="Дата действия"
+                    className={classes.datepicker}
+                    value={dayjs(card.endDate)}
+                    onChange={(newValue) => changeDate(newValue, "endDate")}
+                  />
+                </LocalizationProvider>
+              </div>
+              {card.skills && (
+                <CardFormSkills
+                  skills={card.skills}
+                  onChange={changeCardTags}
                 />
-              </LocalizationProvider>
-
-            { card.skills && <CardFormSkills skills={card.skills} onChange={changeCardTags}/> }
-
+              )}
             </DialogContent>
             <DialogActions>
               <Button variant="contained" onClick={onClose}>

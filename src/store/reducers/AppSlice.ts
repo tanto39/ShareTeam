@@ -1,9 +1,12 @@
 import React from 'react';
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IAppSlice } from "../../models/IApp";
+import { IAppSlice, IUserInfo } from "../../models/IApp";
 
 const InitialState: IAppSlice = {
-  isAuth: false,
+  userInfo: {
+    isAuth: false,
+    userName: ''
+  },
   isLoading: false
 }
 
@@ -13,11 +16,11 @@ export const appSlice = createSlice({
   reducers: {
     authFetching(state) {
       state.isLoading = true;
-      state.isAuth = false;
+      state.userInfo = {isAuth: false, userName: ''};
     },
-    authFetchingSuccess(state, action: PayloadAction<boolean>) {
+    authFetchingSuccess(state, action: PayloadAction<IUserInfo>) {
       state.isLoading = false;
-      state.isAuth = action.payload;
+      state.userInfo = action.payload;
     }
   }
 })

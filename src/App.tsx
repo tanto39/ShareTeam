@@ -7,11 +7,11 @@ import TopBar from "./components/TopBar/TopBar";
 import { useAppDispatch, useAppSelector } from "./hooks/redux";
 
 function App() {
-  const { isAuth, isLoading } = useAppSelector((state) => state.appReduser);
+  const { userInfo, isLoading } = useAppSelector((state) => state.appReduser);
 
   return (
     <BrowserRouter>
-      {isAuth ? (
+      {userInfo.isAuth ? (
         <div>
           <TopBar />
           <Container maxWidth="xl">

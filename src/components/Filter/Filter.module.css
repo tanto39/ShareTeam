@@ -1,0 +1,12 @@
+.filter{
+  margin: 1rem 0;
+}
+.filter__block{
+  margin: 0.5 rem 0 0 0;
+}
+.filter__field{
+  width: 95%;
+}
+.filterButton{
+  margin: 1rem 1rem 0 0;
+}

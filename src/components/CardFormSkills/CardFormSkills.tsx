@@ -5,7 +5,6 @@ import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import classes from "./CardFormSkills.module.css";
 import { skills as skillsLocal } from "../../services/local";
-import { ICardSkill } from "../../models/ICard";
 
 const CardFormSkills: FC<ICardFormSkillsProps> = ({ skills, onChange }) => {
   const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;

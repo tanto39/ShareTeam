@@ -1,4 +1,4 @@
-import { ICard, ICardSkill } from "../models/ICard";
+import { ICard, ICardProject, ICardSkill } from "../models/ICard";
 
 export const cardListLocal:ICard[] = [
   {
@@ -106,4 +106,13 @@ export const skills: ICardSkill[] = [
   { id: '6', name: 'Java'},
   { id: '7', name: 'ABAP'},
   { id: '8', name: 'Laravel'},
-]
+];
+
+export const projects: ICardProject[] = [
+  { id: '1', name: 'Цифровизация компании ПГТ'},
+  { id: '2', name: 'Цифровизация компании ПГТ 2'},
+  { id: '3', name: 'Цифровизация компании ПГТ 3'},
+  { id: '4', name: 'Цифровизация компании ПГТ 4'},
+  { id: '5', name: 'Цифровизация компании ПГТ 5'},
+  { id: '6', name: 'Цифровизация компании ПГТ 6'}
+];

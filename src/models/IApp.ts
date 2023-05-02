@@ -1,5 +1,10 @@
 
 export interface IAppSlice {
-  isAuth: boolean,
+  userInfo: IUserInfo,
   isLoading: boolean,
+}
+
+export interface IUserInfo {
+  isAuth: boolean,
+  userName: string
 }
