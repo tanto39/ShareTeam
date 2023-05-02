@@ -6,9 +6,14 @@ export interface ICard {
   description: string,
   endDate: string,
   skills: ICardSkill[]
-}
+};
 
 export interface ICardSkill {
+  id: string,
+  name: string
+};
+
+export interface ICardProject {
   id: string,
   name: string
 }

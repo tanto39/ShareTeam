@@ -1,4 +1,3 @@
-import { ChangeEvent } from 'react';
 import { ICardSkill } from "../../models/ICard";
 
 export interface ICardFormSkillsProps {

@@ -26,7 +26,10 @@ const Login: FC = () => {
       return;
     }
 
-    dispatch(setAuth(true))
+    dispatch(setAuth({
+      isAuth: true,
+      userName: 'Гутнев Андрей'
+    }))
   };
 
   return (

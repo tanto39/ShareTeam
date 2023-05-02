@@ -5,6 +5,7 @@ import { ICardListProps } from "./ICardListProps";
 import CardListItem from "../CardListItem/CardListItem";
 import CardForm from "../CardForm/CardForm";
 import TopBlock from "../TopBlock/TopBlock";
+import Filter from "../Filter/Filter";
 
 const CardList: FC<ICardListProps> = ({ cards }) => {
   const [isOpen, setOpen] = React.useState<boolean>(false);
@@ -23,6 +24,7 @@ const CardList: FC<ICardListProps> = ({ cards }) => {
   return (
     <div>
       <TopBlock onOpen={handleOpen}/>
+      <Filter cards={cards}/>
       <Grid container spacing={2}>
         {cards.map((card, index) => (
           <CardListItem key={card.id} card={card} onOpen={handleOpen} />
