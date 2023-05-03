@@ -9,12 +9,28 @@ const Resources = () => {
     $format: "json",
   };
 
+  // const fetchCards = async() => {
+  //   const response: Response = await fetch(
+  //     'http://1348377-ch44360.tw1.ru/cards',
+  //     {
+  //       method: 'GET',
+  //       headers: {
+  //         'ContentType': 'application/json',
+  //       }
+  //     });
+  
+  //   const data: any = await response.json();
+  // };
+
+  // fetchCards();
+
+
   return (
     <div>
       <Typography variant="h1" fontSize={"2rem"} component="h1" gutterBottom>
         Ресурсы
       </Typography>
-      <CardList cards={cardListLocal}/>
+      <CardList cards={cardListLocal} url="/resources"/>
     </div>
   );
 };

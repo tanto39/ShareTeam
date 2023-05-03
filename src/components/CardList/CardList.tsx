@@ -6,8 +6,9 @@ import CardListItem from "../CardListItem/CardListItem";
 import CardForm from "../CardForm/CardForm";
 import TopBlock from "../TopBlock/TopBlock";
 import Filter from "../Filter/Filter";
+import CardsPagination from "../CardsPagination/CardsPagination";
 
-const CardList: FC<ICardListProps> = ({ cards }) => {
+const CardList: FC<ICardListProps> = ({ cards, url }) => {
   const [isOpen, setOpen] = React.useState<boolean>(false);
   const [cardId, setCardId] = React.useState<string | boolean>('');
 
@@ -30,6 +31,7 @@ const CardList: FC<ICardListProps> = ({ cards }) => {
           <CardListItem key={card.id} card={card} onOpen={handleOpen} />
         ))}
       </Grid>
+      <CardsPagination url={url}/>
 
       <CardForm Id={cardId} isOpen={isOpen} onClose={handleClose} />
     </div>
