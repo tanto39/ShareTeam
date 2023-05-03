@@ -14,7 +14,7 @@ const Cards = () => {
       <Typography variant="h1" fontSize={"2rem"} component="h1" gutterBottom>
         Потребности
       </Typography>
-      <CardList cards={cardListLocal}/>
+      <CardList cards={cardListLocal} url='/'/>
     </div>
   );
 
