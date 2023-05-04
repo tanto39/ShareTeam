@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC, useState, ChangeEvent } from "react";
 import { IFilterProps } from "./IFilterProps";
 import {
   Typography,
@@ -20,9 +20,33 @@ import { DatePicker } from "@mui/x-date-pickers";
 import dayjs, { Dayjs } from "dayjs";
 import "dayjs/locale/ru";
 import CardFormSkills from "../CardFormSkills/CardFormSkills";
+import { useAppDispatch, useAppSelector } from "../../hooks/redux";
+import { setFilter } from "../../store/reducers/ActionCreators";
+import { InitialState } from "../../store/reducers/FilterSlice";
 
 const Filter: FC<IFilterProps> = ({ cards }) => {
   const [expanded, setExpanded] = useState<string | false>(false);
+  const { filter } = useAppSelector((state) => state.filterReduser);
+  const dispatch = useAppDispatch();
+
+  const changeInput = async (
+    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    key: string
+  ) => {
+    dispatch(setFilter({ ...filter, [key]: event.target.value }));
+  };
+
+  const changeTags = async (newTags: any[], key: string) => {
+    dispatch(setFilter({ ...filter, [key]: newTags }));
+  };
+
+  const changeDate = async (date: Dayjs | null, key: string) => {
+    dispatch(setFilter({ ...filter, [key]: date?.toString() }));
+  };
+
+  const clearFilter = async () => {
+    dispatch(setFilter(InitialState.filter));
+  };
 
   const setOpen =
     (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
@@ -53,6 +77,8 @@ const Filter: FC<IFilterProps> = ({ cards }) => {
                 id="filterPerson"
                 label="Контактное лицо"
                 variant="outlined"
+                value={filter.person}
+                onChange={(event) => changeInput(event, "person")}
               />
             </Grid>
             <Grid item md={4}>
@@ -73,6 +99,8 @@ const Filter: FC<IFilterProps> = ({ cards }) => {
                 id="FilterDescr"
                 label="Описание"
                 variant="outlined"
+                value={filter.description}
+                onChange={(event) => changeInput(event, "description")}
               />
             </Grid>
             <Grid item md={4} marginTop={"1rem"}>
@@ -83,13 +111,14 @@ const Filter: FC<IFilterProps> = ({ cards }) => {
                 <DatePicker
                   className={classes.filter__field}
                   label="Дата действия"
-                  onChange={() => {}}
+                  value={filter.endDate ? dayjs(filter.endDate) : null }
+                  onChange={(newValue) => changeDate(newValue, "endDate")}
                 />
               </LocalizationProvider>
             </Grid>
             <Grid item md={8}>
               <div className={classes.filter__field}>
-                <CardFormSkills skills={[]} onChange={() => {}} />
+                <CardFormSkills skills={filter.skills} onChange={changeTags} />
               </div>
             </Grid>
           </Grid>
@@ -100,7 +129,7 @@ const Filter: FC<IFilterProps> = ({ cards }) => {
               </Button>
             </div>
             <div className={classes.filterButton}>
-              <Button variant="contained" onClick={() => {}}>
+              <Button variant="contained" onClick={clearFilter}>
                 Сбросить
               </Button>
             </div>

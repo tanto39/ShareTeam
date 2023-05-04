@@ -4,7 +4,7 @@ import { BrowserRouter, HashRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
 import { privateRoutes, routes } from "./Routes/routes";
 import TopBar from "./components/TopBar/TopBar";
-import { useAppDispatch, useAppSelector } from "./hooks/redux";
+import { useAppSelector } from "./hooks/redux";
 
 function App() {
   const { userInfo, isLoading } = useAppSelector((state) => state.appReduser);
