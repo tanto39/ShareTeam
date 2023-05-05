@@ -23,6 +23,7 @@ import CardFormSkills from "../CardFormSkills/CardFormSkills";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { setFilter } from "../../store/reducers/ActionCreators";
 import { InitialState } from "../../store/reducers/FilterSlice";
+import { useProject } from "../../hooks/useProject";
 
 const Filter: FC<IFilterProps> = ({ cards }) => {
   const [expanded, setExpanded] = useState<string | false>(false);
@@ -40,6 +41,10 @@ const Filter: FC<IFilterProps> = ({ cards }) => {
     dispatch(setFilter({ ...filter, [key]: newTags }));
   };
 
+  const changeSelect = async (newValue: any, key: string) => {
+    dispatch(setFilter({ ...filter, [key]: newValue }));
+  };
+
   const changeDate = async (date: Dayjs | null, key: string) => {
     dispatch(setFilter({ ...filter, [key]: date?.toString() }));
   };
@@ -47,6 +52,8 @@ const Filter: FC<IFilterProps> = ({ cards }) => {
   const clearFilter = async () => {
     dispatch(setFilter(InitialState.filter));
   };
+
+  const project = useProject(filter.project);
 
   const setOpen =
     (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
@@ -83,7 +90,10 @@ const Filter: FC<IFilterProps> = ({ cards }) => {
             </Grid>
             <Grid item md={4}>
               <Autocomplete
-                disablePortal
+                value={project}
+                onChange={(event, newInputValue) => {
+                  changeSelect(newInputValue?.id, "project");
+                }}
                 className={classes.filter__field}
                 id="filterProject"
                 options={projects}
@@ -111,7 +121,7 @@ const Filter: FC<IFilterProps> = ({ cards }) => {
                 <DatePicker
                   className={classes.filter__field}
                   label="Дата действия"
-                  value={filter.endDate ? dayjs(filter.endDate) : null }
+                  value={filter.endDate ? dayjs(filter.endDate) : null}
                   onChange={(newValue) => changeDate(newValue, "endDate")}
                 />
               </LocalizationProvider>
