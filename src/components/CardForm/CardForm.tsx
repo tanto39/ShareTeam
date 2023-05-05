@@ -8,6 +8,7 @@ import {
   DialogContent,
   DialogTitle,
   StyledEngineProvider,
+  Autocomplete,
 } from "@mui/material";
 import dayjs, { Dayjs } from "dayjs";
 import { DatePicker } from "@mui/x-date-pickers";
@@ -18,6 +19,8 @@ import { cardListLocal } from "../../services/local";
 import classes from "./CardForm.module.css";
 import "dayjs/locale/ru";
 import CardFormSkills from "../CardFormSkills/CardFormSkills";
+import { projects } from "../../services/local";
+import { useProject } from "../../hooks/useProject";
 
 const CardForm: FC<ICardFormProps> = ({ Id, isOpen, onClose }) => {
   const [card, setCard] = useState<ICard>({} as ICard);
@@ -44,6 +47,10 @@ const CardForm: FC<ICardFormProps> = ({ Id, isOpen, onClose }) => {
     setCard({ ...card, [key]: date?.toString() });
   };
 
+  const changeSelect = async (newValue: any, key: string) => {
+    setCard({ ...card, [key]: newValue });
+  };
+
   const onCloseCard = async () => {
     onClose();
     setCard({} as ICard);
@@ -56,6 +63,8 @@ const CardForm: FC<ICardFormProps> = ({ Id, isOpen, onClose }) => {
       setCard({ ...card, skills: [] });
     }
   }, [Id]);
+
+  const project = useProject(card.project);
 
   return (
     <div>
@@ -85,15 +94,18 @@ const CardForm: FC<ICardFormProps> = ({ Id, isOpen, onClose }) => {
                 value={card.person}
                 onChange={(event) => changeCardInput(event, "person")}
               />
-              <TextField
-                margin="dense"
-                id="project"
-                label="Проект"
-                type="text"
+              <Autocomplete
                 fullWidth
-                variant="standard"
-                value={card.project}
-                onChange={(event) => changeCardInput(event, "project")}
+                value={project}
+                onChange={(event, newInputValue) => {
+                  changeSelect(newInputValue?.id, "project");
+                }}
+                id="project"
+                options={projects}
+                getOptionLabel={(option) => option.name}
+                renderInput={(params) => (
+                  <TextField {...params} label="Проект" variant="standard" margin="dense"/>
+                )}
               />
               <TextField
                 margin="dense"
