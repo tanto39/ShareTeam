@@ -1,11 +1,12 @@
-import { ICard, ICardProject, ICardSkill } from "../models/ICard";
+import { ICard, ICardProject, ICardSkill, ITeam } from "../models/ICard";
 
 export const cardListLocal:ICard[] = [
   {
     id: '001',
     title: 'Потребность 1',
     person: 'Иванов Иван Иванович',
-    project: 'Цифровизация компании ПГТ',
+    teamId: '1',
+    project: '1',
     description: 'Проекты в сфере разработки, интеграции, обязателен опыт интеграции фронтенд бэкэнд',
     endDate: '2023-08-08',
     skills: [
@@ -22,8 +23,9 @@ export const cardListLocal:ICard[] = [
   {
     id: '002',
     title: 'Потребность 2',
+    teamId: '2',
     person: 'Иванов Иван Иванович 2',
-    project: 'Цифровизация компании ПГТ 2',
+    project: '2',
     description: 'Проекты в сфере разработки, интеграции, обязателен опыт интеграции фронтенд бэкэнд 2',
     endDate: '2024-08-08',
     skills: [
@@ -41,7 +43,8 @@ export const cardListLocal:ICard[] = [
     id: '003',
     title: 'Потребность 3',
     person: 'Иванов Иван Иванович 3',
-    project: 'Цифровизация компании ПГТ 3',
+    teamId: '3',
+    project: '3',
     description: 'Проекты в сфере разработки, интеграции, обязателен опыт интеграции фронтенд бэкэнд 3',
     endDate: '2024-02-08',
     skills: [
@@ -59,7 +62,8 @@ export const cardListLocal:ICard[] = [
     id: '004',
     title: 'Потребность 4',
     person: 'Иванов Иван Иванович 4',
-    project: 'Цифровизация компании ПГТ 4',
+    teamId: '4',
+    project: '4',
     description: 'Проекты в сфере разработки, интеграции, обязателен опыт интеграции 4',
     endDate: '2023-08-08',
     skills: [
@@ -73,7 +77,8 @@ export const cardListLocal:ICard[] = [
     id: '005',
     title: 'Потребность 5',
     person: 'Иванов Иван Иванович 5',
-    project: 'Цифровизация компании ПГТ 5',
+    teamId: '5',
+    project: '5',
     description: 'Проекты в сфере разработки, интеграции, обязателен опыт интеграции 5',
     endDate: '2023-08-08',
     skills: [
@@ -88,7 +93,8 @@ export const cardListLocal:ICard[] = [
     id: '006',
     title: 'Потребность 6',
     person: 'Иванов Иван Иванович 6',
-    project: 'Цифровизация компании ПГТ 6',
+    teamId: '6',
+    project: '6',
     description: 'Проекты в сфере разработки, интеграции, обязателен опыт интеграции 6',
     endDate: '2023-08-08',
     skills: [
@@ -115,4 +121,13 @@ export const projects: ICardProject[] = [
   { id: '4', name: 'Цифровизация компании ПГТ 4'},
   { id: '5', name: 'Цифровизация компании ПГТ 5'},
   { id: '6', name: 'Цифровизация компании ПГТ 6'}
+];
+
+export const teams: ITeam[] = [
+  { id: '1', name: 'Команда 1'},
+  { id: '2', name: 'Команда 2'},
+  { id: '3', name: 'Команда 3'},
+  { id: '4', name: 'Команда 4'},
+  { id: '5', name: 'Команда 5'},
+  { id: '6', name: 'Команда 6'}
 ];

@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { Container } from "@mui/material";
 import { BrowserRouter, HashRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
-import { privateRoutes, routes } from "./Routes/routes";
+import { publicRoutes, routes } from "./Routes/routes";
 import TopBar from "./components/TopBar/TopBar";
 import { useAppSelector } from "./hooks/redux";
 
@@ -24,7 +24,7 @@ function App() {
         </div>
       ) : (
         <Routes>
-          {privateRoutes.map(({ path, element: Element }) => (
+          {publicRoutes.map(({ path, element: Element }) => (
             <Route key={path} path={path} element={Element}></Route>
           ))}
         </Routes>

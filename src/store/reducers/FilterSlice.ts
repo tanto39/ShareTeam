@@ -6,7 +6,7 @@ export const InitialState: IFilterSlice = {
   filter: {
     person: '',
     project: '',
-    description: '',
+    teamId: '',
     endDate: '',
     skills: []
   }

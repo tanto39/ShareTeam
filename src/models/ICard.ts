@@ -1,6 +1,7 @@
 export interface ICard {
   id: string,
   title: string,
+  teamId: string,
   person: string,
   project: string,
   description: string,
@@ -14,6 +15,10 @@ export interface ICardSkill {
 };
 
 export interface ICardProject {
+  id: string,
+  name: string
+}
+export interface ITeam {
   id: string,
   name: string
 }
