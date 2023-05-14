@@ -7,7 +7,7 @@ export interface IFilterSlice {
 export interface IFilter {
   person: string,
   project: string,
-  description: string,
+  teamId: string,
   endDate: string | null,
   skills: ICardSkill[]
 }

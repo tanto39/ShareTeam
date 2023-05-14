@@ -13,7 +13,7 @@ import {
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import classes from "./Filter.module.css";
-import { projects } from "../../services/local";
+import { projects, teams } from "../../services/local";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers";
@@ -24,10 +24,14 @@ import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { setFilter } from "../../store/reducers/ActionCreators";
 import { InitialState } from "../../store/reducers/FilterSlice";
 import { useProject } from "../../hooks/useProject";
+import { ICardProject, ITeam } from "../../models/ICard";
+import { useTeam } from "../../hooks/useTeam";
 
 const Filter: FC<IFilterProps> = ({ cards }) => {
   const [expanded, setExpanded] = useState<string | false>(false);
   const { filter } = useAppSelector((state) => state.filterReduser);
+  const [project, setProject] = useState<ICardProject>({} as ICardProject);
+  const [team, setTeam] = useState<ITeam>({} as ITeam);
   const dispatch = useAppDispatch();
 
   const changeInput = async (
@@ -53,7 +57,8 @@ const Filter: FC<IFilterProps> = ({ cards }) => {
     dispatch(setFilter(InitialState.filter));
   };
 
-  const project = useProject(filter.project);
+  useProject(filter.project, setProject);
+  useTeam(filter.teamId, setTeam)
 
   const setOpen =
     (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
@@ -104,13 +109,18 @@ const Filter: FC<IFilterProps> = ({ cards }) => {
               />
             </Grid>
             <Grid item md={4}>
-              <TextField
+            <Autocomplete
+                value={team}
+                onChange={(event, newInputValue) => {
+                  changeSelect(newInputValue?.id, "teamId");
+                }}
                 className={classes.filter__field}
-                id="FilterDescr"
-                label="Описание"
-                variant="outlined"
-                value={filter.description}
-                onChange={(event) => changeInput(event, "description")}
+                id="filterTeam"
+                options={teams}
+                getOptionLabel={(option) => option.name}
+                renderInput={(params) => (
+                  <TextField {...params} label="Команда" variant="outlined" />
+                )}
               />
             </Grid>
             <Grid item md={4} marginTop={"1rem"}>

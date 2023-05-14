@@ -14,16 +14,19 @@ import dayjs, { Dayjs } from "dayjs";
 import { DatePicker } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { ICard } from "../../models/ICard";
-import { cardListLocal } from "../../services/local";
+import { ICard, ICardProject, ITeam } from "../../models/ICard";
+import { cardListLocal, teams } from "../../services/local";
 import classes from "./CardForm.module.css";
 import "dayjs/locale/ru";
 import CardFormSkills from "../CardFormSkills/CardFormSkills";
 import { projects } from "../../services/local";
 import { useProject } from "../../hooks/useProject";
+import { useTeam } from "../../hooks/useTeam";
 
 const CardForm: FC<ICardFormProps> = ({ Id, isOpen, onClose }) => {
   const [card, setCard] = useState<ICard>({} as ICard);
+  const [project, setProject] = useState<ICardProject>({} as ICardProject);
+  const [team, setTeam] = useState<ITeam>({} as ITeam);
 
   const setCardFromLocal = (Id: string | boolean) => {
     const cardFromLocal: ICard = cardListLocal.filter(
@@ -64,7 +67,8 @@ const CardForm: FC<ICardFormProps> = ({ Id, isOpen, onClose }) => {
     }
   }, [Id]);
 
-  const project = useProject(card.project);
+  useProject(card.project, setProject);
+  useTeam(card.teamId, setTeam);
 
   return (
     <div>
@@ -96,6 +100,24 @@ const CardForm: FC<ICardFormProps> = ({ Id, isOpen, onClose }) => {
               />
               <Autocomplete
                 fullWidth
+                value={team}
+                onChange={(event, newInputValue) => {
+                  changeSelect(newInputValue?.id, "teamId");
+                }}
+                id="teamId"
+                options={teams}
+                getOptionLabel={(option) => option.name}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    label="Команда"
+                    variant="standard"
+                    margin="dense"
+                  />
+                )}
+              />
+              <Autocomplete
+                fullWidth
                 value={project}
                 onChange={(event, newInputValue) => {
                   changeSelect(newInputValue?.id, "project");
@@ -104,7 +126,12 @@ const CardForm: FC<ICardFormProps> = ({ Id, isOpen, onClose }) => {
                 options={projects}
                 getOptionLabel={(option) => option.name}
                 renderInput={(params) => (
-                  <TextField {...params} label="Проект" variant="standard" margin="dense"/>
+                  <TextField
+                    {...params}
+                    label="Проект"
+                    variant="standard"
+                    margin="dense"
+                  />
                 )}
               />
               <TextField
@@ -157,4 +184,4 @@ const CardForm: FC<ICardFormProps> = ({ Id, isOpen, onClose }) => {
   );
 };
 
-export default CardForm; 
+export default CardForm;

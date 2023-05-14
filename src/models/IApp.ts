@@ -6,5 +6,6 @@ export interface IAppSlice {
 
 export interface IUserInfo {
   isAuth: boolean,
-  userName: string
+  userName: string,
+  team: string,
 }

@@ -10,9 +10,11 @@ import {
   ListItemText,
 } from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import GroupsIcon from '@mui/icons-material/Groups';
 import classes from "./Personal.module.css";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { setAuth } from "../../store/reducers/ActionCreators";
+import { InitialState } from "../../store/reducers/AppSlice";
 
 const Personal: FC = () => {
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
@@ -30,10 +32,7 @@ const Personal: FC = () => {
 
   const handleLogout = async () => {
     dispatch(
-      setAuth({
-        isAuth: false,
-        userName: "",
-      })
+      setAuth(InitialState.userInfo)
     );
   };
 
@@ -71,6 +70,12 @@ const Personal: FC = () => {
                 <AccountCircleIcon />
               </ListItemIcon>
               <ListItemText primary="Имя пользователя" secondary={userInfo.userName} />
+            </ListItem>
+            <ListItem>
+              <ListItemIcon>
+                <GroupsIcon />
+              </ListItemIcon>
+              <ListItemText primary="Команда" secondary={userInfo.team} />
             </ListItem>
           </List>
           <Button variant="contained" onClick={handleLogout}>

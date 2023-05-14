@@ -2,10 +2,11 @@ import React from 'react';
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IAppSlice, IUserInfo } from "../../models/IApp";
 
-const InitialState: IAppSlice = {
+export const InitialState: IAppSlice = {
   userInfo: {
     isAuth: false,
-    userName: ''
+    userName: '',
+    team: ''
   },
   isLoading: false
 }
@@ -16,7 +17,7 @@ export const appSlice = createSlice({
   reducers: {
     authFetching(state) {
       state.isLoading = true;
-      state.userInfo = {isAuth: false, userName: ''};
+      state.userInfo = InitialState.userInfo;
     },
     authFetchingSuccess(state, action: PayloadAction<IUserInfo>) {
       state.isLoading = false;
