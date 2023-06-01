@@ -22,7 +22,7 @@ export const appSlice = createSlice({
     authFetchingSuccess(state, action: PayloadAction<IUserInfo>) {
       state.isLoading = false;
       state.userInfo = action.payload;
-    }
+    },
   }
 })
 

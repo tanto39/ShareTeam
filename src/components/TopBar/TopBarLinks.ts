@@ -7,5 +7,6 @@ export interface ITopBarLinks {
 
 export const topBarLinks: ITopBarLinks[] = [
   { link: '/', title: 'Потребности' },
-  { link: '/resources', title: 'Ресурсы' }
+  { link: '/resources', title: 'Ресурсы' },
+  { link: '/teams', title: 'Команды' }
 ]
