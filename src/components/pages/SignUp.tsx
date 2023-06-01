@@ -15,6 +15,10 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { ISignUp } from "../../models/ISignUp";
 import Login from "./Login";
 import { useNavigate } from "react-router-dom";
+import { userAPI } from "../../services/userApi";
+import Loader from "../Loader/Loader";
+import CardMessage from "../CardMessage/CardMessage";
+import { ICustomError } from "../../models/IError";
 
 const SignUp: FC = () => {
   const [userData, setUserData] = useState<ISignUp>({} as ISignUp);
@@ -29,19 +33,18 @@ const SignUp: FC = () => {
 
   const theme = createTheme();
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const [signUp, { isLoading: isLoading, error: error }] = userAPI.useSignUpMutation();
+
+  const handleSubmit = async(event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+    const signUpResult = await signUp(userData);
   };
 
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
-        <CssBaseline />
+        {isLoading && <Loader />}
+        {error && <CardMessage severity="error" message={error as ICustomError}/>}
         <Box
           sx={{
             marginTop: 8,

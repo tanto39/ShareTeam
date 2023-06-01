@@ -3,11 +3,13 @@ import Login from "../components/pages/Login";
 import Resources from "../components/pages/Resources";
 import { Navigate, RouteObject } from 'react-router-dom';
 import SignUp from "../components/pages/SignUp";
+import Teams from "../components/pages/Teams";
 //import { IRoute } from "../models/IRoute";
 
 export const routes: RouteObject[] = [
   { path: "/", element: <Cards/> },
   { path: "/resources", element: <Resources/> },
+  { path: "/teams", element: <Teams/> },
   { path: "*", element: <Navigate replace to="/" /> },
 ];
 
