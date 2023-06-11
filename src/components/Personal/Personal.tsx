@@ -69,13 +69,25 @@ const Personal: FC = () => {
               <ListItemIcon>
                 <AccountCircleIcon />
               </ListItemIcon>
-              <ListItemText primary="Имя пользователя" secondary={userInfo.userName} />
+              <ListItemText primary="Логин" secondary={userInfo.user?.username} />
+            </ListItem>
+            <ListItem>
+              <ListItemIcon>
+                <AccountCircleIcon />
+              </ListItemIcon>
+              <ListItemText primary="Имя" secondary={userInfo.user?.firstname} />
+            </ListItem>
+            <ListItem>
+              <ListItemIcon>
+                <AccountCircleIcon />
+              </ListItemIcon>
+              <ListItemText primary="Фамилия" secondary={userInfo.user?.lastname} />
             </ListItem>
             <ListItem>
               <ListItemIcon>
                 <GroupsIcon />
               </ListItemIcon>
-              <ListItemText primary="Команда" secondary={userInfo.team} />
+              <ListItemText primary="Команда" secondary={userInfo.user?.nameTeam} />
             </ListItem>
           </List>
           <Button variant="contained" onClick={handleLogout}>
