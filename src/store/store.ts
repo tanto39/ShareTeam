@@ -1,16 +1,18 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import appReduser from './reducers/AppSlice';
 import filterReduser from './reducers/FilterSlice';
+import { userAPI } from "../services/userApi";
 
 const rootReducer = combineReducers({
   appReduser,
-  filterReduser
+  filterReduser,
+  [userAPI.reducerPath]: userAPI.reducer
 });
 
 export const setupStore = () => {
   return configureStore({
     reducer: rootReducer,
-    //middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(cardsAPI.middleware)
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(userAPI.middleware),
   })
 }
 

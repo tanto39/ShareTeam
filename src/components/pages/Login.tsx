@@ -1,4 +1,4 @@
-import React, { useState, FC, FormEvent, ChangeEvent } from "react";
+import React, { useState, FC, FormEvent, ChangeEvent, useEffect } from "react";
 import {
   Container,
   TextField,
@@ -14,16 +14,24 @@ import {
   Checkbox,
   createTheme,
 } from "@mui/material";
-import { useAppDispatch } from "../../hooks/redux";
+import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { setAuth } from "../../store/reducers/ActionCreators";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import { ILogin } from "../../models/Ilogin";
+import { ILogin, ILoginResult } from "../../models/Ilogin";
 import { useNavigate } from "react-router-dom";
+import { userAPI } from "../../services/userApi";
+import Loader from "../Loader/Loader";
+import CardMessage from "../CardMessage/CardMessage";
+import { ICustomError } from "../../models/IError";
 
 const Login: FC = () => {
   const [userData, setUserData] = useState<ILogin>({} as ILogin);
   const [loginError, setLoginError] = useState<boolean>(false);
   const [passwordError, setPasswordError] = useState<boolean>(false);
+  const [error, setError] = useState<ICustomError>();
+  const [userDataRes, setUserDataRes] = useState<ILoginResult>(
+    {} as ILoginResult
+  );
   const navigate = useNavigate();
 
   const changeInput = async (
@@ -35,9 +43,28 @@ const Login: FC = () => {
 
   const dispatch = useAppDispatch();
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const [signIn, { isLoading: isLoadingSign, error: errorSign }] =
+    userAPI.useSignInMutation();
 
+  const {
+    data: dataUser,
+    error: errorUser,
+    isLoading: isLoadingUser,
+  } = userAPI.useFetchUserQuery(userDataRes.id, {
+    skip: !userDataRes.id,
+  });
+  if (dataUser) {
+    dispatch(
+      setAuth({
+        isAuth: true,
+        accessToken: userDataRes.accessToken,
+        user: dataUser,
+      })
+    );
+  }
+
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
     setLoginError(false);
     setPasswordError(false);
 
@@ -50,21 +77,30 @@ const Login: FC = () => {
       return;
     }
 
-    dispatch(
-      setAuth({
-        isAuth: true,
-        userName: "Гутнев Андрей",
-        team: "Команда 1",
-      })
-    );
+    const signUpResult = await signIn(userData).unwrap();
+    if (signUpResult) {
+      setUserDataRes(signUpResult);
+    }
   };
+
+  useEffect(() => {
+    if (errorSign) {
+      setError(errorSign as ICustomError);
+    };
+    if (errorUser) {
+      setError(errorUser as ICustomError);
+    };
+  }, [errorSign, errorUser]);
 
   const theme = createTheme();
 
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
-        <CssBaseline />
+        { ( isLoadingSign || isLoadingUser ) && <Loader />}
+        { error && (
+          <CardMessage severity="error" error={error as ICustomError} />
+        )}
         <Box
           sx={{
             marginTop: 8,

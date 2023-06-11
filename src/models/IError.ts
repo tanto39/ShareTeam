@@ -1,10 +1,8 @@
 export interface ICustomError {
   data: {
-    error: {
-      message: {
-        value: string
-      }
-    }
-  },
-  status:number
+    error: string,
+    path: string,
+    status: number,
+    timestamp: string,
+  }
 }
