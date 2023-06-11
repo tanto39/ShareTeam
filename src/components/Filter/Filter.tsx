@@ -58,7 +58,7 @@ const Filter: FC<IFilterProps> = ({ cards }) => {
   };
 
   useProject(filter.project, setProject);
-  useTeam(filter.teamId, setTeam)
+  useTeam(filter.teamId, setTeam);
 
   const setOpen =
     (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
