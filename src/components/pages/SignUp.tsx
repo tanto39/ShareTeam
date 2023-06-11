@@ -1,4 +1,10 @@
-import React, { ChangeEvent, FC, FormEvent, useState } from "react";
+import React, {
+  ChangeEvent,
+  FC,
+  FormEvent,
+  useState,
+  useCallback,
+} from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -22,6 +28,7 @@ import { ICustomError } from "../../models/IError";
 
 const SignUp: FC = () => {
   const [userData, setUserData] = useState<ISignUp>({} as ISignUp);
+  const [message, setMessage] = useState<string>();
   const navigate = useNavigate();
 
   const changeInput = async (
@@ -33,18 +40,27 @@ const SignUp: FC = () => {
 
   const theme = createTheme();
 
-  const [signUp, { isLoading: isLoading, error: error }] = userAPI.useSignUpMutation();
+  const [signUp, { isLoading, error }] = userAPI.useSignUpMutation();
 
-  const handleSubmit = async(event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const signUpResult = await signUp(userData);
-  };
+  const handleSubmit = useCallback(
+    async (event: FormEvent<HTMLFormElement>) => {
+      event.preventDefault();
+      const signUpResult = await signUp(userData).unwrap();
+      if (signUpResult) {
+        setMessage(signUpResult.message);
+      }
+    },
+    [signUp, userData]
+  );
 
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
         {isLoading && <Loader />}
-        {error && <CardMessage severity="error" message={error as ICustomError}/>}
+        {error && (
+          <CardMessage severity="error" error={error as ICustomError} />
+        )}
+        {message && <CardMessage severity="info" message={message} />}
         <Box
           sx={{
             marginTop: 8,
