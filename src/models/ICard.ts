@@ -1,17 +1,23 @@
 export interface ICard {
   id: string,
-  title: string,
+  created?: string,
+  updated?: string,
+  status?: string,
+  jobTitle: string,
   teamId: string,
   person: string,
-  project: string,
+  projectName: string,
+  rank?: string,
   description: string,
-  endDate: string,
+  locationWorked?: string,
+  needBefore: string,
   skills: ICardSkill[]
 };
 
 export interface ICardSkill {
   id: string,
-  name: string
+  skill: string,
+  description?: string,
 };
 
 export interface ICardProject {
@@ -20,5 +26,10 @@ export interface ICardProject {
 }
 export interface ITeam {
   id: string,
-  name: string
+  name: string,
+  created?: string,
+  updated?: string,
+  status?: string,
+  description?: string,
+  ownerId?: number
 }

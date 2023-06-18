@@ -18,7 +18,7 @@ import { InitialState } from "../../store/reducers/AppSlice";
 
 const Personal: FC = () => {
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
-  const { userInfo, isLoading } = useAppSelector((state) => state.appReduser);
+  const { userInfo, isLoading, error } = useAppSelector((state) => state.appReduser);
 
   const handleOpen = async (event: MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);

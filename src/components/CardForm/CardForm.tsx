@@ -19,13 +19,13 @@ import { cardListLocal, teams } from "../../services/local";
 import classes from "./CardForm.module.css";
 import "dayjs/locale/ru";
 import CardFormSkills from "../CardFormSkills/CardFormSkills";
-import { projects } from "../../services/local";
-import { useProject } from "../../hooks/useProject";
+//import { projects } from "../../services/local";
+//import { useProject } from "../../hooks/useProject";
 import { useTeam } from "../../hooks/useTeam";
 
 const CardForm: FC<ICardFormProps> = ({ Id, isOpen, onClose }) => {
   const [card, setCard] = useState<ICard>({} as ICard);
-  const [project, setProject] = useState<ICardProject>({} as ICardProject);
+  //const [project, setProject] = useState<ICardProject>({} as ICardProject);
   const [team, setTeam] = useState<ITeam>({} as ITeam);
 
   const setCardFromLocal = (Id: string | boolean) => {
@@ -67,7 +67,7 @@ const CardForm: FC<ICardFormProps> = ({ Id, isOpen, onClose }) => {
     }
   }, [Id]);
 
-  useProject(card.project, setProject);
+  //useProject(card.project, setProject);
   useTeam(card.teamId, setTeam);
 
   return (
@@ -75,18 +75,18 @@ const CardForm: FC<ICardFormProps> = ({ Id, isOpen, onClose }) => {
       {card && (
         <StyledEngineProvider injectFirst>
           <Dialog open={isOpen} onClose={onCloseCard}>
-            <DialogTitle>{card.title ? card.title : ""}</DialogTitle>
+            <DialogTitle>{card.jobTitle ? card.jobTitle : ""}</DialogTitle>
             <DialogContent>
               <TextField
                 autoFocus
                 margin="dense"
-                id="title"
+                id="jobTitle"
                 label="Заголовок"
                 type="text"
                 fullWidth
                 variant="standard"
-                value={card.title}
-                onChange={(event) => changeCardInput(event, "title")}
+                value={card.jobTitle}
+                onChange={(event) => changeCardInput(event, "jobTitle")}
               />
               <TextField
                 margin="dense"
@@ -116,7 +116,7 @@ const CardForm: FC<ICardFormProps> = ({ Id, isOpen, onClose }) => {
                   />
                 )}
               />
-              <Autocomplete
+              {/* <Autocomplete
                 fullWidth
                 value={project}
                 onChange={(event, newInputValue) => {
@@ -133,6 +133,16 @@ const CardForm: FC<ICardFormProps> = ({ Id, isOpen, onClose }) => {
                     margin="dense"
                   />
                 )}
+              /> */}
+              <TextField
+                margin="dense"
+                id="projectName"
+                label="Проект"
+                type="text"
+                fullWidth
+                variant="standard"
+                value={card.projectName}
+                onChange={(event) => changeCardInput(event, "projectName")}
               />
               <TextField
                 margin="dense"
@@ -154,8 +164,8 @@ const CardForm: FC<ICardFormProps> = ({ Id, isOpen, onClose }) => {
                   <DatePicker
                     label="Дата действия"
                     className={classes.datepicker}
-                    value={dayjs(card.endDate)}
-                    onChange={(newValue) => changeDate(newValue, "endDate")}
+                    value={dayjs(card.needBefore)}
+                    onChange={(newValue) => changeDate(newValue, "needBefore")}
                   />
                 </LocalizationProvider>
               </div>

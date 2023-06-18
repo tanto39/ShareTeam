@@ -4,13 +4,13 @@ import { ICustomError } from "../models/IError";
 import { ITeam } from "../models/ICard";
 
 export const teamAPI = createApi({
-  reducerPath: 'cardsAPI',
+  reducerPath: 'teamAPI',
   baseQuery: fetchBaseQuery({ baseUrl: constants.BASE_URL }) as BaseQueryFn<string | FetchArgs, unknown, ICustomError, {}>,
   tagTypes: ['Team'],
   endpoints: (build) => ({
-    fetchTeams: build.query<ITeam[], ITeam[]>({
+    fetchTeams: build.query({
       query: () => ({
-        url: '',
+        url: '/api/team',
         headers: {
           'ContentType': 'application/json',
           //'x-csrf-token': 'fetch'
