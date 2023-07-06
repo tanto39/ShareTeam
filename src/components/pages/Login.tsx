@@ -52,6 +52,7 @@ const Login: FC = () => {
   } = userAPI.useFetchUserQuery(userDataRes.id, {
     skip: !userDataRes.id,
   });
+
   if (dataUser) {
     dispatch(
       setAuth({
@@ -76,19 +77,21 @@ const Login: FC = () => {
       return;
     }
 
-    const signUpResult = await signIn(userData).unwrap();
-    if (signUpResult) {
-      setUserDataRes(signUpResult);
+    try {
+      const signUpResult = await signIn(userData).unwrap();
+      signUpResult && setUserDataRes(signUpResult);
+    } catch (e: any) {
+      setError(e as ICustomError);
     }
   };
 
   useEffect(() => {
     if (errorSign) {
       setError(errorSign as ICustomError);
-    };
+    }
     if (errorUser) {
       setError(errorUser as ICustomError);
-    };
+    }
   }, [errorSign, errorUser]);
 
   const theme = createTheme();
@@ -96,8 +99,8 @@ const Login: FC = () => {
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
-        { ( isLoadingSign || isLoadingUser ) && <Loader />}
-        { error && (
+        {(isLoadingSign || isLoadingUser) && <Loader />}
+        {error && (
           <CardMessage severity="error" error={error as ICustomError} />
         )}
         <Box

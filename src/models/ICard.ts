@@ -1,5 +1,5 @@
 export interface ICard {
-  id: string,
+  id: number | undefined,
   created?: string,
   updated?: string,
   status?: string,
@@ -7,9 +7,9 @@ export interface ICard {
   teamId: string,
   person: string,
   projectName: string,
-  rank?: string,
+  rank: string,
   description: string,
-  locationWorked?: string,
+  locationWorked: string,
   needBefore: string,
   skills: ICardSkill[]
 };

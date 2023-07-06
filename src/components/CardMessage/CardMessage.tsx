@@ -4,9 +4,8 @@ import { Alert, Box, Collapse, IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import { error } from "console";
 
-const CardMessage: FC<ICardMessageProps> = ({ severity, error, message }) => {
+const CardMessage: FC<ICardMessageProps> = ({ severity, error, message, clearMessage }) => {
   const [open, setOpen] = useState<boolean>(true);
-
   const [msg, setMsg] = useState<String>('');
 
   useEffect(() => {
@@ -21,6 +20,13 @@ const CardMessage: FC<ICardMessageProps> = ({ severity, error, message }) => {
     };
   }, [message]);
 
+  const handleClose = async () => {
+    setOpen(false);
+    if (clearMessage) {
+      clearMessage();
+    }
+  }
+
   return (
     <Box sx={{ width: "100%" }}>
       <Collapse in={open}>
@@ -31,7 +37,7 @@ const CardMessage: FC<ICardMessageProps> = ({ severity, error, message }) => {
               aria-label="close"
               color="inherit"
               size="small"
-              onClick={() => { setOpen(false);}}
+              onClick={handleClose}
             >
               <CloseIcon fontSize="inherit" />
             </IconButton>

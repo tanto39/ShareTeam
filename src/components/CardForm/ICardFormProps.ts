@@ -1,7 +1,7 @@
 import { ICard } from "../../models/ICard";
 
 export interface ICardFormProps {
-  Id: string | boolean,
+  Id: number | undefined,
   isOpen: boolean,
   onClose: () => void
 }

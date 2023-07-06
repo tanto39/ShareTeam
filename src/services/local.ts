@@ -2,13 +2,15 @@ import { ICard, ICardProject, ICardSkill, ITeam } from "../models/ICard";
 
 export const cardListLocal:ICard[] = [
   {
-    id: '001',
+    id: 1,
     jobTitle: 'Потребность 1',
     person: 'Иванов Иван Иванович',
     teamId: '1',
     projectName: 'Цифровизация компании ПГТ',
     description: 'Проекты в сфере разработки, интеграции, обязателен опыт интеграции фронтенд бэкэнд',
     needBefore: '2023-08-08',
+    rank: 'Junior',
+    locationWorked: 'Удаленно',
     skills: [
       { id: '1', skill: 'JavaScript'},
       { id: '2', skill: 'TypeScript'},
@@ -21,13 +23,15 @@ export const cardListLocal:ICard[] = [
     ]
   },
   {
-    id: '002',
+    id: 2,
     jobTitle: 'Потребность 2',
     teamId: 'Цифровизация компании ПГТ 2',
     person: 'Иванов Иван Иванович 2',
     projectName: '2',
     description: 'Проекты в сфере разработки, интеграции, обязателен опыт интеграции фронтенд бэкэнд 2',
     needBefore: '2024-08-08',
+    rank: 'Junior',
+    locationWorked: 'Удаленно',
     skills: [
       { id: '1', skill: 'JavaScript'},
       { id: '2', skill: 'TypeScript'},
@@ -40,13 +44,15 @@ export const cardListLocal:ICard[] = [
     ]
   },
   {
-    id: '003',
+    id: 3,
     jobTitle: 'Потребность 3',
     person: 'Иванов Иван Иванович 3',
     teamId: '3',
     projectName: 'Цифровизация компании ПГТ 3',
     description: 'Проекты в сфере разработки, интеграции, обязателен опыт интеграции фронтенд бэкэнд 3',
     needBefore: '2024-02-08',
+    rank: 'Junior',
+    locationWorked: 'Удаленно',
     skills: [
       { id: '1', skill: 'JavaScript'},
       { id: '2', skill: 'TypeScript'},
@@ -59,13 +65,15 @@ export const cardListLocal:ICard[] = [
     ]
   },
   {
-    id: '004',
+    id: 4,
     jobTitle: 'Потребность 4',
     person: 'Иванов Иван Иванович 4',
     teamId: '4',
     projectName: 'Цифровизация компании ПГТ 4',
     description: 'Проекты в сфере разработки, интеграции, обязателен опыт интеграции 4',
     needBefore: '2023-08-08',
+    rank: 'Junior',
+    locationWorked: 'Удаленно',
     skills: [
       { id: '1', skill: 'JavaScript'},
       { id: '2', skill: 'TypeScript'},
@@ -74,13 +82,15 @@ export const cardListLocal:ICard[] = [
     ]
   },
   {
-    id: '005',
+    id: 5,
     jobTitle: 'Потребность 5',
     person: 'Иванов Иван Иванович 5',
     teamId: '5',
     projectName: 'Цифровизация компании ПГТ 5',
     description: 'Проекты в сфере разработки, интеграции, обязателен опыт интеграции 5',
     needBefore: '2023-08-08',
+    rank: 'Junior',
+    locationWorked: 'Удаленно',
     skills: [
       { id: '1', skill: 'JavaScript'},
       { id: '2', skill: 'TypeScript'},
@@ -90,13 +100,15 @@ export const cardListLocal:ICard[] = [
     ]
   },
   {
-    id: '006',
+    id: 6,
     jobTitle: 'Потребность 6',
     person: 'Иванов Иван Иванович 6',
     teamId: '6',
     projectName: 'Цифровизация компании ПГТ 6',
     description: 'Проекты в сфере разработки, интеграции, обязателен опыт интеграции 6',
     needBefore: '2023-08-08',
+    rank: 'Junior',
+    locationWorked: 'Удаленно',
     skills: [
       { id: '1', skill: 'JavaScript'}
     ]
