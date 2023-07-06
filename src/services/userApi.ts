@@ -8,7 +8,7 @@ import { IMessage } from "../models/IMessage";
 import { ILogin, ILoginResult } from "../models/Ilogin";
 
 export const userAPI = createApi({
-  reducerPath: 'cardsAPI',
+  reducerPath: 'userAPI',
   baseQuery: fetchBaseQuery({ baseUrl: constants.BASE_URL }) as BaseQueryFn<string | FetchArgs, unknown, ICustomError | IMessage, {}>,
   tagTypes: ['User'],
   endpoints: (build) => ({

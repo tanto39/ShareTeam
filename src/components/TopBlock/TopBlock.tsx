@@ -7,7 +7,7 @@ const TopBlock: FC<ITopBlock> = ({onOpen}) => {
   return (
     <Grid container spacing={2} className={classes.topblock}>
       <Grid item md={4}>
-        <Button variant="contained" onClick={() => onOpen('')}>Создать карточку</Button>
+        <Button variant="contained" onClick={() => onOpen(undefined)}>Создать карточку</Button>
       </Grid>
     </Grid>
   )

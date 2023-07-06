@@ -10,7 +10,6 @@ import CardMessage from "../CardMessage/CardMessage";
 import { ICustomError } from "../../models/IError";
 
 const Teams: FC = () => {
-  const dispatch = useAppDispatch();
   const {
     data: teams,
     error: errorGet,

@@ -1,4 +1,4 @@
-import React, { FC, useState, useEffect, ChangeEvent } from "react";
+import React, { FC, useState, useEffect, ChangeEvent, MouseEvent } from "react";
 import { ICardFormProps } from "./ICardFormProps";
 import {
   Button,
@@ -22,18 +22,56 @@ import CardFormSkills from "../CardFormSkills/CardFormSkills";
 //import { projects } from "../../services/local";
 //import { useProject } from "../../hooks/useProject";
 import { useTeam } from "../../hooks/useTeam";
+import { cardsAPI } from "../../services/cardsApi";
+import Loader from "../Loader/Loader";
+import CardMessage from "../CardMessage/CardMessage";
+import { ICustomError } from "../../models/IError";
 
 const CardForm: FC<ICardFormProps> = ({ Id, isOpen, onClose }) => {
   const [card, setCard] = useState<ICard>({} as ICard);
   //const [project, setProject] = useState<ICardProject>({} as ICardProject);
   const [team, setTeam] = useState<ITeam>({} as ITeam);
+  const [error, setError] = useState<ICustomError>();
+  const [message, setMessage] = useState<string>();
 
-  const setCardFromLocal = (Id: string | boolean) => {
-    const cardFromLocal: ICard = cardListLocal.filter(
-      (card) => card.id === Id
-    )[0];
-    setCard(cardFromLocal);
+  // const setCardFromLocal = (Id: number | undefined) => {
+  //   const cardFromLocal: ICard = cardListLocal.filter(
+  //     (card) => card.id === Id
+  //   )[0];
+  //   setCard(cardFromLocal);
+  // };
+
+  const [createCard, { isLoading: isLoadingCreate, error: errorCreate }] =
+    cardsAPI.useCreateCardMutation();
+
+  const [updateCard, { isLoading: isLoadingUpd, error: errorUpd }] =
+    cardsAPI.useUpdateCardMutation();
+
+  const handleSubmit = async (event: MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+
+    if (!Id) {
+      const createResult = await createCard(card).unwrap();
+      if (createResult) {
+        setCard(createResult);
+        setMessage("Карточка создана");
+      };
+    } else {
+      const updateResult = await updateCard(card).unwrap();
+      if (updateResult) {
+        setCard(updateResult);
+        setMessage("Карточка сохранена");
+      };
+    };
   };
+
+  const {
+    data: dataCard,
+    error: errorCardGet,
+    isLoading: isLoadingCard,
+  } = cardsAPI.useFetchCardQuery(Id as number, {
+    skip: !Id,
+  });
 
   const changeCardInput = async (
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -60,21 +98,39 @@ const CardForm: FC<ICardFormProps> = ({ Id, isOpen, onClose }) => {
   };
 
   useEffect(() => {
-    if (Id) {
-      setCardFromLocal(Id);
-    } else {
+    if (!Id) {
       setCard({ ...card, skills: [] });
     }
-  }, [Id]);
+    if (Id && dataCard) {
+      setCard(dataCard);
+    }
+    if (errorCardGet) {
+      setError(errorCardGet as ICustomError);
+    }
+    if (errorCreate) {
+      setError(errorCreate as ICustomError);
+    }
+    if (errorUpd) {
+      setError(errorUpd as ICustomError);
+    }
+  }, [Id, dataCard, errorCardGet, errorCreate, errorUpd]);
 
   //useProject(card.project, setProject);
-  useTeam(card.teamId, setTeam);
+  useTeam(card?.teamId, setTeam);
 
   return (
-    <div>
-      {card && (
-        <StyledEngineProvider injectFirst>
-          <Dialog open={isOpen} onClose={onCloseCard}>
+    <StyledEngineProvider injectFirst>
+      <Dialog open={isOpen} onClose={onCloseCard}>
+        {(isLoadingCard || isLoadingCreate || isLoadingUpd) && <Loader />}
+        {error && (
+          <CardMessage
+            severity="error"
+            error={error as ICustomError}
+            clearMessage={() => setError(undefined)}
+          />
+        )}
+        {card && (
+          <div>
             <DialogTitle>{card.jobTitle ? card.jobTitle : ""}</DialogTitle>
             <DialogContent>
               <TextField
@@ -85,7 +141,7 @@ const CardForm: FC<ICardFormProps> = ({ Id, isOpen, onClose }) => {
                 type="text"
                 fullWidth
                 variant="standard"
-                value={card.jobTitle}
+                value={card.jobTitle ? card.jobTitle : ""}
                 onChange={(event) => changeCardInput(event, "jobTitle")}
               />
               <TextField
@@ -95,7 +151,7 @@ const CardForm: FC<ICardFormProps> = ({ Id, isOpen, onClose }) => {
                 type="text"
                 fullWidth
                 variant="standard"
-                value={card.person}
+                value={card.person ? card.person : ""}
                 onChange={(event) => changeCardInput(event, "person")}
               />
               <Autocomplete
@@ -141,8 +197,28 @@ const CardForm: FC<ICardFormProps> = ({ Id, isOpen, onClose }) => {
                 type="text"
                 fullWidth
                 variant="standard"
-                value={card.projectName}
+                value={card.projectName ? card.projectName : ""}
                 onChange={(event) => changeCardInput(event, "projectName")}
+              />
+              <TextField
+                margin="dense"
+                id="rank"
+                label="Ранг"
+                type="text"
+                fullWidth
+                variant="standard"
+                value={card.rank ? card.rank : ""}
+                onChange={(event) => changeCardInput(event, "rank")}
+              />
+              <TextField
+                margin="dense"
+                id="locationWorked"
+                label="Место работы"
+                type="text"
+                fullWidth
+                variant="standard"
+                value={card.locationWorked ? card.locationWorked : ""}
+                onChange={(event) => changeCardInput(event, "locationWorked")}
               />
               <TextField
                 margin="dense"
@@ -153,7 +229,7 @@ const CardForm: FC<ICardFormProps> = ({ Id, isOpen, onClose }) => {
                 variant="standard"
                 multiline
                 maxRows={10}
-                value={card.description}
+                value={card.description ? card.description : ""}
                 onChange={(event) => changeCardInput(event, "description")}
               />
               <div className={classes.datepicker}>
@@ -175,22 +251,29 @@ const CardForm: FC<ICardFormProps> = ({ Id, isOpen, onClose }) => {
                   onChange={changeCardTags}
                 />
               )}
+              {message && (
+                <CardMessage
+                  severity="info"
+                  message={message}
+                  clearMessage={() => setMessage(undefined)}
+                />
+              )}
             </DialogContent>
             <DialogActions>
               <Button variant="contained" onClick={onClose}>
                 Отменить
               </Button>
-              <Button variant="contained" onClick={onClose}>
+              <Button variant="contained" onClick={handleSubmit}>
                 Сохранить
               </Button>
               <Button variant="contained" onClick={onClose}>
                 Удалить
               </Button>
             </DialogActions>
-          </Dialog>
-        </StyledEngineProvider>
-      )}
-    </div>
+          </div>
+        )}
+      </Dialog>
+    </StyledEngineProvider>
   );
 };
 
