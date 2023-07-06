@@ -65,6 +65,18 @@ const CardListItem: FC<ICardListItemProps> = ({ card, onOpen }) => {
                 <ListItemIcon>
                   <AssignmentIcon />
                 </ListItemIcon>
+                <ListItemText primary="Ранг" secondary={card.rank} />
+              </ListItem>
+              <ListItem>
+                <ListItemIcon>
+                  <AssignmentIcon />
+                </ListItemIcon>
+                <ListItemText primary="Место работы" secondary={card.locationWorked} />
+              </ListItem>
+              <ListItem>
+                <ListItemIcon>
+                  <AssignmentIcon />
+                </ListItemIcon>
                 <ListItemText primary="Дата действия" secondary={formatDate} />
               </ListItem>
               <ListItem>

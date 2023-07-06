@@ -10,16 +10,16 @@ import CardsPagination from "../CardsPagination/CardsPagination";
 
 const CardList: FC<ICardListProps> = ({ cards, url }) => {
   const [isOpen, setOpen] = React.useState<boolean>(false);
-  const [cardId, setCardId] = React.useState<string | boolean>('');
+  const [cardId, setCardId] = React.useState<number | undefined>();
 
-  const handleOpen = async (Id: string) => {
+  const handleOpen = async (Id: number | undefined) => {
     setOpen(true);
     setCardId(Id);
   };
 
   const handleClose = () => {
     setOpen(false);
-    setCardId(false);
+    setCardId(0);
   };
 
   return (
