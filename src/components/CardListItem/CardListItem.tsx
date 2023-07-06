@@ -1,4 +1,4 @@
-import React, { FC, useState, useEffect } from "react";
+import React, { FC, useState } from "react";
 import {
   Card,
   Grid,
@@ -15,17 +15,18 @@ import AssignmentIcon from "@mui/icons-material/Assignment";
 import { ICardListItemProps } from "./ICardListItemProps";
 import classes from "./CardListItem.module.css";
 import { useFormatDate } from "../../hooks/useFormatDate";
-import { ICardProject, ITeam } from "../../models/ICard";
-import { projects } from "../../services/local";
-import { useProject } from "../../hooks/useProject";
+// import { ICardProject, ITeam } from "../../models/ICard";
+// import { projects } from "../../services/local";
+// import { useProject } from "../../hooks/useProject";
 import { useTeam } from "../../hooks/useTeam";
+import { ITeam } from "../../models/ICard";
 
 const CardListItem: FC<ICardListItemProps> = ({ card, onOpen }) => {
-  const formatDate = useFormatDate(card.endDate);
-  const [project, setProject] = useState<ICardProject>({} as ICardProject);
+  const formatDate = useFormatDate(card.needBefore);
+  //const [project, setProject] = useState<ICardProject>({} as ICardProject);
   const [team, setTeam] = useState<ITeam>({} as ITeam);
 
-  useProject(card.project, setProject);
+  //useProject(card.project, setProject);
   useTeam(card.teamId, setTeam);
 
   return (
@@ -36,7 +37,7 @@ const CardListItem: FC<ICardListItemProps> = ({ card, onOpen }) => {
           className={classes.card}
           onClick={() => onOpen(card.id)}
         >
-          <CardHeader title={card.title} />
+          <CardHeader title={card.jobTitle} />
           <CardContent>
             <List dense={true}>
               <ListItem>
@@ -58,7 +59,7 @@ const CardListItem: FC<ICardListItemProps> = ({ card, onOpen }) => {
                 <ListItemIcon>
                   <AssignmentIcon />
                 </ListItemIcon>
-                <ListItemText primary="Проект" secondary={project.name} />
+                <ListItemText primary="Проект" secondary={card.projectName} />
               </ListItem>
               <ListItem>
                 <ListItemIcon>
@@ -81,7 +82,7 @@ const CardListItem: FC<ICardListItemProps> = ({ card, onOpen }) => {
                     <Chip
                       key={skill.id}
                       className={classes.tags__item}
-                      label={skill.name}
+                      label={skill.skill}
                       variant="outlined"
                     />
                   ))}

@@ -21,7 +21,7 @@ const CardFormSkills: FC<ICardFormSkillsProps> = ({ skills, onChange }) => {
         id="skill-tags"
         options={skillsLocal}
         disableCloseOnSelect
-        getOptionLabel={(option) => option.name}
+        getOptionLabel={(option) => option.skill}
         isOptionEqualToValue={(option, value) => option.id === value.id}
         renderOption={(props, option, { selected }) => (
           <li {...props}>
@@ -31,7 +31,7 @@ const CardFormSkills: FC<ICardFormSkillsProps> = ({ skills, onChange }) => {
               style={{ marginRight: 8 }}
               checked={selected}
             />
-            {option.name}
+            {option.skill}
           </li>
         )}
         renderInput={(params) => (
