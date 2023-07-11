@@ -80,5 +80,17 @@ export const cardsAPI = createApi({
       },
       invalidatesTags: ['Cards']
     }),
+    deleteCard: build.mutation<ICard, number>({
+      query: (id) => ({
+        url: `/api/request/${id}`,
+        method: 'DELETE',
+        headers: {
+          //'ContentType': 'application/json',
+          'Accept': 'application/json',
+          //'x-csrf-token': 'fetch',
+        },
+      }),
+      invalidatesTags: ['Cards']
+    }),
   })
 })

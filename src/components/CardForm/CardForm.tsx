@@ -47,6 +47,9 @@ const CardForm: FC<ICardFormProps> = ({ Id, isOpen, onClose }) => {
   const [updateCard, { isLoading: isLoadingUpd, error: errorUpd }] =
     cardsAPI.useUpdateCardMutation();
 
+  const [deleteCard, { isLoading: isLoadingDel, error: errorDel }] =
+    cardsAPI.useDeleteCardMutation();
+
   const handleSubmit = async (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
 
@@ -63,6 +66,18 @@ const CardForm: FC<ICardFormProps> = ({ Id, isOpen, onClose }) => {
         setMessage("Карточка сохранена");
       };
     };
+  };
+
+  const handleDelete = async (event: MouseEvent<HTMLButtonElement>) => {
+    try {
+      const deleteResult = await deleteCard(card.id as number).unwrap();
+      if (deleteResult) {
+        setCard({} as ICard);
+        setMessage("Карточка удалена");
+      };
+    } catch (e: any) {
+      setError(e as ICustomError);
+    }
   };
 
   const {
@@ -113,7 +128,10 @@ const CardForm: FC<ICardFormProps> = ({ Id, isOpen, onClose }) => {
     if (errorUpd) {
       setError(errorUpd as ICustomError);
     }
-  }, [Id, dataCard, errorCardGet, errorCreate, errorUpd]);
+    if (errorDel) {
+      setError(errorDel as ICustomError);
+    }
+  }, [Id, dataCard, errorCardGet, errorCreate, errorUpd, errorDel]);
 
   //useProject(card.project, setProject);
   useTeam(card?.teamId, setTeam);
@@ -121,7 +139,7 @@ const CardForm: FC<ICardFormProps> = ({ Id, isOpen, onClose }) => {
   return (
     <StyledEngineProvider injectFirst>
       <Dialog open={isOpen} onClose={onCloseCard}>
-        {(isLoadingCard || isLoadingCreate || isLoadingUpd) && <Loader />}
+        {(isLoadingCard || isLoadingCreate || isLoadingUpd || isLoadingDel) && <Loader />}
         {error && (
           <CardMessage
             severity="error"
@@ -266,7 +284,7 @@ const CardForm: FC<ICardFormProps> = ({ Id, isOpen, onClose }) => {
               <Button variant="contained" onClick={handleSubmit}>
                 Сохранить
               </Button>
-              <Button variant="contained" onClick={onClose}>
+              <Button variant="contained" onClick={handleDelete}>
                 Удалить
               </Button>
             </DialogActions>
