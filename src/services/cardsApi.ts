@@ -19,8 +19,8 @@ export const cardsAPI = createApi({
   }) as BaseQueryFn<string | FetchArgs, unknown, ICustomError, {}>,
   tagTypes: ['Cards'],
   endpoints: (build) => ({
-    fetchCards: build.query<ICardList, IGetParams>({
-      query: (params: IGetParams) => ({
+    fetchCards: build.query<ICardList, string>({
+      query: (params: any) => ({
         url: '/api/request',
         headers: {
           'ContentType': 'application/json',
