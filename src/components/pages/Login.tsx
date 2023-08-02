@@ -49,7 +49,7 @@ const Login: FC = () => {
     data: dataUser,
     error: errorUser,
     isLoading: isLoadingUser,
-  } = userAPI.useFetchUserQuery(userDataRes.id, {
+  } = userAPI.useFetchUserQuery({ id:userDataRes.id, accessToken: userDataRes.accessToken }, {
     skip: !userDataRes.id,
   });
 

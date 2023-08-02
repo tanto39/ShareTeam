@@ -1,3 +1,3 @@
-export interface IGetParams{
+export interface IGetParams {
   [key: string]: string
 }

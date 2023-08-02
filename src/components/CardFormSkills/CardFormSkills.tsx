@@ -9,12 +9,16 @@ import { skillAPI } from "../../services/skillApi";
 import { ICardSkill } from "../../models/ICard";
 import CardMessage from "../CardMessage/CardMessage";
 import { ICustomError } from "../../models/IError";
+import { useAppSelector } from "../../hooks/redux";
 
 const CardFormSkills: FC<ICardFormSkillsProps> = ({ skills, onChange }) => {
   const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
   const checkedIcon = <CheckBoxIcon fontSize="small" />;
+  const { userInfo } = useAppSelector((state) => state.appReduser);
+  
   const { data: allSkills, error: errorSkills } = skillAPI.useFetchSkillsQuery(
-    {}
+    userInfo.accessToken as string,
+    { skip: !userInfo.accessToken }
   );
   const [error, setError] = useState<ICustomError>();
 

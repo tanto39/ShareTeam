@@ -26,12 +26,13 @@ import { cardsAPI } from "../../services/cardsApi";
 import Loader from "../Loader/Loader";
 import CardMessage from "../CardMessage/CardMessage";
 import { ICustomError } from "../../models/IError";
+import { useAppSelector } from "../../hooks/redux";
 
 const CardForm: FC<ICardFormProps> = ({ Id, isOpen, onClose }) => {
   const [card, setCard] = useState<ICard>({} as ICard);
   //const [project, setProject] = useState<ICardProject>({} as ICardProject);
   const [team, setTeam] = useState<ITeam>({} as ITeam);
-  const [error, setError] = useState<ICustomError>();
+  const [error, setError] = useState<ICustomError | undefined>();
   const [message, setMessage] = useState<string>();
 
   // const setCardFromLocal = (Id: number | undefined) => {
@@ -41,11 +42,22 @@ const CardForm: FC<ICardFormProps> = ({ Id, isOpen, onClose }) => {
   //   setCard(cardFromLocal);
   // };
 
-  const [createCard, { isLoading: isLoadingCreate, error: errorCreate }] =
-    cardsAPI.useCreateCardMutation();
+  const [
+    createCard,
+    { isLoading: isLoadingCreate, error: errorCreate, reset: resetCreate },
+  ] = cardsAPI.useCreateCardMutation();
 
-  const [updateCard, { isLoading: isLoadingUpd, error: errorUpd }] =
-    cardsAPI.useUpdateCardMutation();
+  const [
+    updateCard,
+    { isLoading: isLoadingUpd, error: errorUpd, reset: resetUpd },
+  ] = cardsAPI.useUpdateCardMutation();
+
+  const [
+    deleteCard,
+    { isLoading: isLoadingDel, error: errorDel, reset: resetDel },
+  ] = cardsAPI.useDeleteCardMutation();
+
+  const { userInfo } = useAppSelector((state) => state.appReduser);
 
   const [deleteCard, { isLoading: isLoadingDel, error: errorDel }] =
     cardsAPI.useDeleteCardMutation();
@@ -58,14 +70,22 @@ const CardForm: FC<ICardFormProps> = ({ Id, isOpen, onClose }) => {
       if (createResult) {
         setCard(createResult);
         setMessage("Карточка создана");
-      };
+      }
     } else {
       const updateResult = await updateCard(card).unwrap();
       if (updateResult) {
         setCard(updateResult);
         setMessage("Карточка сохранена");
-      };
-    };
+      }
+    }
+  };
+
+  const handleDelete = async (event: MouseEvent<HTMLButtonElement>) => {
+    const deleteResult = await deleteCard(card.id as number).unwrap();
+    if (deleteResult) {
+      setCard({} as ICard);
+      setMessage("Карточка удалена");
+    }
   };
 
   const handleDelete = async (event: MouseEvent<HTMLButtonElement>) => {
@@ -84,6 +104,7 @@ const CardForm: FC<ICardFormProps> = ({ Id, isOpen, onClose }) => {
     data: dataCard,
     error: errorCardGet,
     isLoading: isLoadingCard,
+    refetch: refetch,
   } = cardsAPI.useFetchCardQuery(Id as number, {
     skip: !Id,
   });
@@ -113,11 +134,13 @@ const CardForm: FC<ICardFormProps> = ({ Id, isOpen, onClose }) => {
   };
 
   useEffect(() => {
-    if (!Id) {
-      setCard({ ...card, skills: [] });
-    }
-    if (Id && dataCard) {
-      setCard(dataCard);
+    if (userInfo) {
+      if (!Id) {
+        setCard({ ...card, skills: [], ownerId: userInfo.user?.id as number });
+      }
+      if (Id && dataCard) {
+        setCard({ ...dataCard });
+      }
     }
     if (errorCardGet) {
       setError(errorCardGet as ICustomError);
@@ -131,25 +154,34 @@ const CardForm: FC<ICardFormProps> = ({ Id, isOpen, onClose }) => {
     if (errorDel) {
       setError(errorDel as ICustomError);
     }
-  }, [Id, dataCard, errorCardGet, errorCreate, errorUpd, errorDel]);
+  }, [Id, dataCard, errorCardGet, errorCreate, errorUpd, errorDel, userInfo]);
 
   //useProject(card.project, setProject);
   useTeam(card?.teamId, setTeam);
 
+  const clearError = () => {
+    setError(undefined);
+    resetDel();
+    resetUpd();
+    resetCreate();
+  };
+
   return (
     <StyledEngineProvider injectFirst>
       <Dialog open={isOpen} onClose={onCloseCard}>
-        {(isLoadingCard || isLoadingCreate || isLoadingUpd || isLoadingDel) && <Loader />}
-        {error && (
+        {(isLoadingCard || isLoadingCreate || isLoadingUpd || isLoadingDel) && (
+          <Loader />
+        )}
+        {(error?.data || error?.error) && (
           <CardMessage
             severity="error"
             error={error as ICustomError}
-            clearMessage={() => setError(undefined)}
+            clearMessage={clearError}
           />
         )}
         {card && (
           <div>
-            <DialogTitle>{card.jobTitle ? card.jobTitle : ""}</DialogTitle>
+            <DialogTitle>{card.jobTitle ? `${card.id} ${card.jobTitle}` : ""}</DialogTitle>
             <DialogContent>
               <TextField
                 autoFocus

@@ -5,9 +5,6 @@ import { Typography } from "@mui/material";
 import { cardListLocal } from "../../services/local";
 
 const Resources = () => {
-  const GetParams: IGetParams = {
-    $format: "json",
-  };
 
   // const fetchCards = async() => {
   //   const response: Response = await fetch(

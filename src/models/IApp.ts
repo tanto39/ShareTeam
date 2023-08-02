@@ -1,7 +1,9 @@
 import { ICustomError } from "./IError"
+import { IGetParams } from "./IGetParams"
 
 export interface IAppSlice {
   userInfo: IUserInfo,
+  getParams?: IGetParams,
   isLoading: boolean,
   error?: ICustomError,
 }
@@ -26,4 +28,9 @@ export interface IUserResult {
       contact: string
     }
   ]
+}
+
+export interface IUserParamsGet {
+  id: number,
+  accessToken: string,
 }

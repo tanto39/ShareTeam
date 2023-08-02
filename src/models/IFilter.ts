@@ -5,9 +5,10 @@ export interface IFilterSlice {
 }
 
 export interface IFilter {
-  person: string,
-  project: string,
-  teamId: string,
-  endDate: string | null,
-  skills: ICardSkill[]
+  jobTitle: string,
+  description: string
+  projectName: string,
+  locationWorked: string,
+  needBefore: string | null,
+  skills: ICardSkill[],
 }
