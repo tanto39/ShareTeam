@@ -1,6 +1,7 @@
-import { ICard, ICardProject, ICardSkill, ITeam } from "../models/ICard";
+   import { ICard, ICardList, ICardProject, ICardSkill, ITeam } from "../models/ICard";
 
-export const cardListLocal:ICard[] = [
+export const cardListLocal:ICardList = {
+  content:[
   {
     id: 1,
     jobTitle: 'Потребность 1',
@@ -20,7 +21,8 @@ export const cardListLocal:ICard[] = [
       { id: '6', skill: 'Java'},
       { id: '7', skill: 'ABAP'},
       { id: '8', skill: 'Laravel'},
-    ]
+    ],
+    ownerId: 1,
   },
   {
     id: 2,
@@ -41,7 +43,8 @@ export const cardListLocal:ICard[] = [
       { id: '6', skill: 'Java'},
       { id: '7', skill: 'ABAP'},
       { id: '8', skill: 'Laravel'},
-    ]
+    ],
+    ownerId: 1,
   },
   {
     id: 3,
@@ -62,7 +65,8 @@ export const cardListLocal:ICard[] = [
       { id: '6', skill: 'Java'},
       { id: '7', skill: 'ABAP'},
       { id: '8', skill: 'Laravel'},
-    ]
+    ],
+    ownerId: 1,
   },
   {
     id: 4,
@@ -79,7 +83,8 @@ export const cardListLocal:ICard[] = [
       { id: '2', skill: 'TypeScript'},
       { id: '3', skill: 'React'},
       { id: '4', skill: 'Redux'}
-    ]
+    ],
+    ownerId: 1,
   },
   {
     id: 5,
@@ -97,7 +102,8 @@ export const cardListLocal:ICard[] = [
       { id: '3', skill: 'React'},
       { id: '4', skill: 'Redux'},
       { id: '5', skill: 'VueJs'},
-    ]
+    ],
+    ownerId: 1,
   },
   {
     id: 6,
@@ -111,9 +117,10 @@ export const cardListLocal:ICard[] = [
     locationWorked: 'Удаленно',
     skills: [
       { id: '1', skill: 'JavaScript'}
-    ]
+    ],
+    ownerId: 1,
   }
-];
+]};
 
 export const skills: ICardSkill[] = [
   { id: '1', skill: 'JavaScript'},

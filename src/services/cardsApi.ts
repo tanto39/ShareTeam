@@ -1,32 +1,44 @@
+import { IGetParams } from './../models/IGetParams';
 import { BaseQueryFn, createApi, FetchArgs, fetchBaseQuery } from "@reduxjs/toolkit/dist/query/react";
 import { constants } from "../constants";
 import { ICustomError } from "../models/IError";
-import { ICard } from "../models/ICard";
+import { ICard, ICardList } from "../models/ICard";
+import { RootState } from '../store/store';
 
 export const cardsAPI = createApi({
   reducerPath: 'cardsAPI',
-  baseQuery: fetchBaseQuery({ baseUrl: constants.BASE_URL }) as BaseQueryFn<string | FetchArgs, unknown, ICustomError, {}>,
+  baseQuery: fetchBaseQuery({ 
+    baseUrl: constants.BASE_URL,
+    prepareHeaders: (headers, { getState }) => {
+      const token = (getState() as RootState).appReduser.userInfo.accessToken;
+      if (token) {
+        headers.set("Authorization", `Bearer ${token}`);
+      }
+      return headers;
+    }, 
+  }) as BaseQueryFn<string | FetchArgs, unknown, ICustomError, {}>,
   tagTypes: ['Cards'],
   endpoints: (build) => ({
-    fetchCards: build.query({
-      query: () => ({
+    fetchCards: build.query<ICardList, IGetParams>({
+      query: (params: IGetParams) => ({
         url: '/api/request',
         headers: {
           'ContentType': 'application/json',
           //'x-csrf-token': 'fetch'
         },
-        transform: ( response: ICard[] ) => {
+        params: params,
+        transform: ( response: ICardList ) => {
           return response;
         },
       }),
-      transformResponse: (response: ICard[]) => {
+      transformResponse: (response: ICardList) => {
         //card.csrfToken = meta.response.headers.get('x-csrf-token');
         return response;
       },
       providesTags: result => ['Cards']
     }),
     fetchCard: build.query<ICard, number>({
-      query: (id: number) => ({
+      query: (id) => ({
         url: `/api/request/${id}`,
         headers: {
           'ContentType': 'application/json',
@@ -80,7 +92,7 @@ export const cardsAPI = createApi({
       },
       invalidatesTags: ['Cards']
     }),
-    deleteCard: build.mutation<ICard, number>({
+    deleteCard: build.mutation<any, number>({
       query: (id) => ({
         url: `/api/request/${id}`,
         method: 'DELETE',

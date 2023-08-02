@@ -2,6 +2,7 @@ import React from 'react';
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IAppSlice, IUserInfo } from "../../models/IApp";
 import { ICustomError } from '../../models/IError';
+import { IGetParams } from '../../models/IGetParams';
 
 export const InitialState: IAppSlice = {
   userInfo: {
@@ -24,8 +25,11 @@ export const appSlice = createSlice({
     },
     userFetchingError(state, action: PayloadAction<ICustomError>) {
       state.isLoading = false;
-      state.error = action.payload
+      state.error = action.payload;
     },
+    setFilter(state, action: PayloadAction<IGetParams>) {
+      state.getParams = action.payload;
+    }
   }
 })
 

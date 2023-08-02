@@ -2,7 +2,6 @@ import React, { FC, useState, useEffect } from "react";
 import { ICardMessageProps } from "./ICardMessageProps";
 import { Alert, Box, Collapse, IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import { error } from "console";
 
 const CardMessage: FC<ICardMessageProps> = ({ severity, error, message, clearMessage }) => {
   const [open, setOpen] = useState<boolean>(true);
@@ -12,19 +11,25 @@ const CardMessage: FC<ICardMessageProps> = ({ severity, error, message, clearMes
     if ( message ) {
       setMsg(message)
     }
-    else if ( error ) {
+    else if ( error?.data?.message ) {
+      setMsg(error.data.message);
+    }
+    else if ( error?.data?.error ) {
       setMsg(error.data.error);
     }
-    else {
+    else if ( error?.error ) {
+      setMsg(error.error);
+    }
+    else if (error) {
       setMsg(JSON.stringify(error))
     };
-  }, [message]);
+  }, [message, error]);
 
-  const handleClose = async () => {
-    setOpen(false);
+  const handleClose = () => {
     if (clearMessage) {
       clearMessage();
-    }
+    };
+    //setOpen(false);
   }
 
   return (

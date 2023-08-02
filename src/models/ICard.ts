@@ -1,3 +1,6 @@
+export interface ICardList {
+  content: ICard[],
+}
 export interface ICard {
   id: number | undefined,
   created?: string,
@@ -11,7 +14,8 @@ export interface ICard {
   description: string,
   locationWorked: string,
   needBefore: string,
-  skills: ICardSkill[]
+  skills: ICardSkill[],
+  ownerId: number,
 };
 
 export interface ICardSkill {

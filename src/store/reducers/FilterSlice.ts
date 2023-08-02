@@ -4,10 +4,11 @@ import { IFilter, IFilterSlice } from './../../models/IFilter';
 
 export const InitialState: IFilterSlice = {
   filter: {
-    person: '',
-    project: '',
-    teamId: '',
-    endDate: '',
+    jobTitle: '',
+    projectName: '',
+    description: '',
+    locationWorked: '',
+    needBefore: '',
     skills: []
   }
 };

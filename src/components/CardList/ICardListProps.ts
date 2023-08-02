@@ -1,6 +1,6 @@
-import { ICard } from "../../models/ICard";
+import { ICardList } from "../../models/ICard";
 
 export interface ICardListProps {
-  cards: ICard[],
-  url: string
+  cards: ICardList,
+  url: string,
 }

@@ -2,7 +2,7 @@ import { BaseQueryMeta } from "@reduxjs/toolkit/dist/query/baseQueryTypes";
 import { BaseQueryFn, createApi, FetchArgs, fetchBaseQuery } from "@reduxjs/toolkit/dist/query/react";
 import { constants } from "../constants";
 import { ICustomError } from "../models/IError";
-import { IUserInfo, IUserResult } from "../models/IApp";
+import { IUserParamsGet, IUserResult } from "../models/IApp";
 import { ISignUp } from "../models/ISignUp";
 import { IMessage } from "../models/IMessage";
 import { ILogin, ILoginResult } from "../models/Ilogin";
@@ -12,11 +12,12 @@ export const userAPI = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: constants.BASE_URL }) as BaseQueryFn<string | FetchArgs, unknown, ICustomError | IMessage, {}>,
   tagTypes: ['User'],
   endpoints: (build) => ({
-    fetchUser: build.query<IUserResult, number>({
-      query: (id: number) => ({
-        url: `/api/user/${id}`,
+    fetchUser: build.query<IUserResult, IUserParamsGet>({
+      query: (params) => ({
+        url: `/api/user/${params.id}`,
         headers: {
           'ContentType': 'application/json',
+          'Authorization': `Bearer ${params.accessToken}`,
           //'x-csrf-token': 'fetch'
         },
         transform: ( response: IUserResult  ) => {

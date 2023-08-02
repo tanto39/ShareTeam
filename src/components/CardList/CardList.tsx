@@ -10,6 +10,7 @@ import CardsPagination from "../CardsPagination/CardsPagination";
 
 const CardList: FC<ICardListProps> = ({ cards, url }) => {
   const [isOpen, setOpen] = React.useState<boolean>(false);
+  const [openCardId, setOpenCardId] = React.useState<number | undefined>();
   const [cardId, setCardId] = React.useState<number | undefined>();
 
   const handleOpen = async (Id: number | undefined) => {
@@ -25,9 +26,9 @@ const CardList: FC<ICardListProps> = ({ cards, url }) => {
   return (
     <div>
       <TopBlock onOpen={handleOpen}/>
-      <Filter cards={cards}/>
+      <Filter cards={cards.content}/>
       <Grid container spacing={2}>
-        {cards.map((card, index) => (
+        {cards.content.map((card, index) => (
           <CardListItem key={card.id} card={card} onOpen={handleOpen} />
         ))}
       </Grid>

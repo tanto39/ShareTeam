@@ -50,15 +50,15 @@ const Filter: FC<IFilterProps> = ({ cards }) => {
   };
 
   const changeDate = async (date: Dayjs | null, key: string) => {
-    dispatch(setFilter({ ...filter, [key]: date?.toString() }));
+    dispatch(setFilter({ ...filter, [key]: date?.format('YYYY-MM-DD') }));
   };
 
   const clearFilter = async () => {
     dispatch(setFilter(InitialState.filter));
   };
 
-  useProject(filter.project, setProject);
-  useTeam(filter.teamId, setTeam);
+  // useProject(filter.project, setProject);
+  // useTeam(filter.teamId, setTeam);
 
   const setOpen =
     (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
@@ -86,14 +86,35 @@ const Filter: FC<IFilterProps> = ({ cards }) => {
             <Grid item md={4}>
               <TextField
                 className={classes.filter__field}
-                id="filterPerson"
-                label="Контактное лицо"
+                id="filterJobTitle"
+                label="Заголовок"
                 variant="outlined"
-                value={filter.person}
-                onChange={(event) => changeInput(event, "person")}
+                value={filter.jobTitle}
+                onChange={(event) => changeInput(event, "jobTitle")}
               />
             </Grid>
             <Grid item md={4}>
+              <TextField
+                className={classes.filter__field}
+                id="filterProjectName"
+                label="Проект"
+                variant="outlined"
+                value={filter.projectName}
+                onChange={(event) => changeInput(event, "projectName")}
+              />
+            </Grid>
+            <Grid item md={4}>
+              <TextField
+                className={classes.filter__field}
+                id="filterDescription"
+                label="Описание"
+                variant="outlined"
+                value={filter.description}
+                onChange={(event) => changeInput(event, "description")}
+              />
+            </Grid>
+
+            {/* <Grid item md={4}>
               <Autocomplete
                 value={project}
                 onChange={(event, newInputValue) => {
@@ -107,8 +128,8 @@ const Filter: FC<IFilterProps> = ({ cards }) => {
                   <TextField {...params} label="Проект" variant="outlined" />
                 )}
               />
-            </Grid>
-            <Grid item md={4}>
+            </Grid> */}
+            {/* <Grid item md={4}>
             <Autocomplete
                 value={team}
                 onChange={(event, newInputValue) => {
@@ -122,7 +143,7 @@ const Filter: FC<IFilterProps> = ({ cards }) => {
                   <TextField {...params} label="Команда" variant="outlined" />
                 )}
               />
-            </Grid>
+            </Grid> */}
             <Grid item md={4} marginTop={"1rem"}>
               <LocalizationProvider
                 dateAdapter={AdapterDayjs}
@@ -131,8 +152,8 @@ const Filter: FC<IFilterProps> = ({ cards }) => {
                 <DatePicker
                   className={classes.filter__field}
                   label="Дата действия"
-                  value={filter.endDate ? dayjs(filter.endDate) : null}
-                  onChange={(newValue) => changeDate(newValue, "endDate")}
+                  value={filter.needBefore ? dayjs(filter.needBefore) : null}
+                  onChange={(newValue) => changeDate(newValue, "needBefore")}
                 />
               </LocalizationProvider>
             </Grid>
