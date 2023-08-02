@@ -41,7 +41,7 @@ const CardForm: FC<ICardFormProps> = ({ Id, isOpen, onClose }) => {
   //   )[0];
   //   setCard(cardFromLocal);
   // };
-
+ 
   const [
     createCard,
     { isLoading: isLoadingCreate, error: errorCreate, reset: resetCreate },
@@ -58,9 +58,6 @@ const CardForm: FC<ICardFormProps> = ({ Id, isOpen, onClose }) => {
   ] = cardsAPI.useDeleteCardMutation();
 
   const { userInfo } = useAppSelector((state) => state.appReduser);
-
-  const [deleteCard, { isLoading: isLoadingDel, error: errorDel }] =
-    cardsAPI.useDeleteCardMutation();
 
   const handleSubmit = async (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
@@ -85,18 +82,6 @@ const CardForm: FC<ICardFormProps> = ({ Id, isOpen, onClose }) => {
     if (deleteResult) {
       setCard({} as ICard);
       setMessage("Карточка удалена");
-    }
-  };
-
-  const handleDelete = async (event: MouseEvent<HTMLButtonElement>) => {
-    try {
-      const deleteResult = await deleteCard(card.id as number).unwrap();
-      if (deleteResult) {
-        setCard({} as ICard);
-        setMessage("Карточка удалена");
-      };
-    } catch (e: any) {
-      setError(e as ICustomError);
     }
   };
 
