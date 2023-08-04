@@ -1,6 +1,7 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import appReduser from "./reducers/AppSlice";
 import filterReduser from "./reducers/FilterSlice";
+import paginationReduser from "./reducers/PaginationSlice";
 import { userAPI } from "../services/userApi";
 import { teamAPI } from "../services/teamApi";
 import { cardsAPI } from "../services/cardsApi";
@@ -9,6 +10,7 @@ import { skillAPI } from "../services/skillApi";
 const rootReducer = combineReducers({
   appReduser,
   filterReduser,
+  paginationReduser,
   [userAPI.reducerPath]: userAPI.reducer,
   [teamAPI.reducerPath]: teamAPI.reducer,
   [cardsAPI.reducerPath]: cardsAPI.reducer,

@@ -1,6 +1,7 @@
    import { ICard, ICardList, ICardProject, ICardSkill, ITeam } from "../models/ICard";
 
 export const cardListLocal:ICardList = {
+  totalPages: 10,
   content:[
   {
     id: 1,
@@ -23,6 +24,11 @@ export const cardListLocal:ICardList = {
       { id: '8', skill: 'Laravel'},
     ],
     ownerId: 1,
+    ownerDetail: {
+      id: 1,
+      firstname: 'Андрей',
+      lastname: 'Гутнев',
+    }
   },
   {
     id: 2,
@@ -45,6 +51,11 @@ export const cardListLocal:ICardList = {
       { id: '8', skill: 'Laravel'},
     ],
     ownerId: 1,
+    ownerDetail: {
+      id: 1,
+      firstname: 'Андрей',
+      lastname: 'Гутнев',
+    }
   },
   {
     id: 3,
@@ -67,6 +78,11 @@ export const cardListLocal:ICardList = {
       { id: '8', skill: 'Laravel'},
     ],
     ownerId: 1,
+    ownerDetail: {
+      id: 1,
+      firstname: 'Андрей',
+      lastname: 'Гутнев',
+    }
   },
   {
     id: 4,
@@ -85,6 +101,11 @@ export const cardListLocal:ICardList = {
       { id: '4', skill: 'Redux'}
     ],
     ownerId: 1,
+    ownerDetail: {
+      id: 1,
+      firstname: 'Андрей',
+      lastname: 'Гутнев',
+    }
   },
   {
     id: 5,
@@ -104,6 +125,11 @@ export const cardListLocal:ICardList = {
       { id: '5', skill: 'VueJs'},
     ],
     ownerId: 1,
+    ownerDetail: {
+      id: 1,
+      firstname: 'Андрей',
+      lastname: 'Гутнев',
+    }
   },
   {
     id: 6,
@@ -119,6 +145,11 @@ export const cardListLocal:ICardList = {
       { id: '1', skill: 'JavaScript'}
     ],
     ownerId: 1,
+    ownerDetail: {
+      id: 1,
+      firstname: 'Андрей',
+      lastname: 'Гутнев',
+    }
   }
 ]};
 

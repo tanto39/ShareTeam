@@ -41,7 +41,7 @@ const CardForm: FC<ICardFormProps> = ({ Id, isOpen, onClose }) => {
   //   )[0];
   //   setCard(cardFromLocal);
   // };
- 
+
   const [
     createCard,
     { isLoading: isLoadingCreate, error: errorCreate, reset: resetCreate },
@@ -186,8 +186,9 @@ const CardForm: FC<ICardFormProps> = ({ Id, isOpen, onClose }) => {
                 type="text"
                 fullWidth
                 variant="standard"
-                value={card.person ? card.person : ""}
-                onChange={(event) => changeCardInput(event, "person")}
+                value={`${card.ownerDetail?.firstname} ${card.ownerDetail?.lastname}`}
+                disabled
+                // onChange={(event) => changeCardInput(event, "person")}
               />
               <Autocomplete
                 fullWidth

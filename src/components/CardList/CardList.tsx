@@ -32,7 +32,7 @@ const CardList: FC<ICardListProps> = ({ cards, url }) => {
           <CardListItem key={card.id} card={card} onOpen={handleOpen} />
         ))}
       </Grid>
-      <CardsPagination url={url}/>
+      <CardsPagination totalPages={cards.totalPages}/>
 
       <CardForm Id={cardId} isOpen={isOpen} onClose={handleClose} />
     </div>
