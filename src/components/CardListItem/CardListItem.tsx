@@ -46,7 +46,7 @@ const CardListItem: FC<ICardListItemProps> = ({ card, onOpen }) => {
                 </ListItemIcon>
                 <ListItemText
                   primary="Контактное лицо"
-                  secondary={card.person}
+                  secondary={`${card.ownerDetail?.firstname} ${card.ownerDetail?.lastname}`}
                 />
               </ListItem>
               <ListItem>

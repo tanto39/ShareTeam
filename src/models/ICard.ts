@@ -1,4 +1,5 @@
 export interface ICardList {
+  totalPages: number,
   content: ICard[],
 }
 export interface ICard {
@@ -16,6 +17,11 @@ export interface ICard {
   needBefore: string,
   skills: ICardSkill[],
   ownerId: number,
+  ownerDetail?: {
+    id: number,
+    lastname: string,
+    firstname: string,
+  }
 };
 
 export interface ICardSkill {

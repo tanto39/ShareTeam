@@ -7,6 +7,7 @@ import { ICardSkill } from '../models/ICard';
 export const useGetParams = () => {
   
   const { filter } = useAppSelector((state) => state.filterReduser);
+  const { pagination } = useAppSelector((state) => state.paginationReduser);
   
   const getParams = useMemo(() => {
      const getParams = new URLSearchParams();
@@ -26,8 +27,11 @@ export const useGetParams = () => {
        }
      };
 
+     getParams.append('page', `${pagination.page}`);
+     getParams.append('pageSize', `${pagination.pageSize}`);
+
      return getParams.toString();
-  }, [filter]);
+  }, [filter, pagination]);
 
   return getParams;
 };
