@@ -6,6 +6,7 @@ import { userAPI } from "../services/userApi";
 import { teamAPI } from "../services/teamApi";
 import { cardsAPI } from "../services/cardsApi";
 import { skillAPI } from "../services/skillApi";
+import { resourceAPI } from "../services/resourceApi";
 
 const rootReducer = combineReducers({
   appReduser,
@@ -15,6 +16,7 @@ const rootReducer = combineReducers({
   [teamAPI.reducerPath]: teamAPI.reducer,
   [cardsAPI.reducerPath]: cardsAPI.reducer,
   [skillAPI.reducerPath]: skillAPI.reducer,
+  [resourceAPI.reducerPath]: resourceAPI.reducer,
 });
 
 const middlewares = [
@@ -22,6 +24,7 @@ const middlewares = [
   teamAPI.middleware,
   cardsAPI.middleware,
   skillAPI.middleware,
+  resourceAPI.middleware,
 ] as const;
 
 export const setupStore = () => {

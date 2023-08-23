@@ -6,7 +6,7 @@ import {
 } from "@reduxjs/toolkit/dist/query/react";
 import { constants } from "../constants";
 import { ICustomError } from "../models/IError";
-import { IResource } from "../models/IResource";
+import { IResource, IResourceList } from "../models/IResource";
 import { RootState } from "../store/store";
 
 export const resourceAPI = createApi({
@@ -23,18 +23,19 @@ export const resourceAPI = createApi({
   }) as BaseQueryFn<string | FetchArgs, unknown, ICustomError, {}>,
   tagTypes: ["Resources"],
   endpoints: (build) => ({
-    fetchResources: build.query({
-      query: () => ({
+    fetchResources: build.query<IResourceList, string>({
+      query: (params: any) => ({
         url: "/api/resources",
         headers: {
           ContentType: "application/json",
           //'x-csrf-token': 'fetch'
         },
-        transform: (response: IResource[]) => {
+        params: params,
+        transform: (response: IResourceList) => {
           return response;
         },
       }),
-      transformResponse: (response: IResource[]) => {
+      transformResponse: (response: IResourceList) => {
         //card.csrfToken = meta.response.headers.get('x-csrf-token');
         return response;
       },

@@ -26,7 +26,7 @@ const CardList: FC<ICardListProps> = ({ cards, url }) => {
   return (
     <div>
       <TopBlock onOpen={handleOpen}/>
-      <Filter cards={cards.content}/>
+      <Filter />
       <Grid container spacing={2}>
         {cards.content.map((card, index) => (
           <CardListItem key={card.id} card={card} onOpen={handleOpen} />

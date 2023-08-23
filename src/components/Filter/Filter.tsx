@@ -1,5 +1,4 @@
 import React, { FC, useState, ChangeEvent } from "react";
-import { IFilterProps } from "./IFilterProps";
 import {
   Typography,
   Accordion,
@@ -26,8 +25,9 @@ import { InitialState } from "../../store/reducers/FilterSlice";
 import { useProject } from "../../hooks/useProject";
 import { ICardProject, ITeam } from "../../models/ICard";
 import { useTeam } from "../../hooks/useTeam";
+import { IFilterProps } from "./IFilterProps";
 
-const Filter: FC<IFilterProps> = ({ cards }) => {
+const Filter: FC<IFilterProps> = ({ isResource }) => {
   const [expanded, setExpanded] = useState<string | false>(false);
   const { filter } = useAppSelector((state) => state.filterReduser);
   const [project, setProject] = useState<ICardProject>({} as ICardProject);
@@ -50,7 +50,7 @@ const Filter: FC<IFilterProps> = ({ cards }) => {
   };
 
   const changeDate = async (date: Dayjs | null, key: string) => {
-    dispatch(setFilter({ ...filter, [key]: date?.format('YYYY-MM-DD') }));
+    dispatch(setFilter({ ...filter, [key]: date?.format("YYYY-MM-DD") }));
   };
 
   const clearFilter = async () => {
@@ -83,27 +83,86 @@ const Filter: FC<IFilterProps> = ({ cards }) => {
       <AccordionDetails>
         <Box component="form" autoComplete="off">
           <Grid container spacing={1}>
-            <Grid item md={4}>
-              <TextField
-                className={classes.filter__field}
-                id="filterJobTitle"
-                label="Заголовок"
-                variant="outlined"
-                value={filter.jobTitle}
-                onChange={(event) => changeInput(event, "jobTitle")}
-              />
-            </Grid>
-            <Grid item md={4}>
-              <TextField
-                className={classes.filter__field}
-                id="filterProjectName"
-                label="Проект"
-                variant="outlined"
-                value={filter.projectName}
-                onChange={(event) => changeInput(event, "projectName")}
-              />
-            </Grid>
-            <Grid item md={4}>
+            {isResource && (
+              <Grid item md={4}>
+                <TextField
+                  className={classes.filter__field}
+                  id="filterCardTitle"
+                  label="Заголовок"
+                  variant="outlined"
+                  value={filter.cardTitle}
+                  onChange={(event) => changeInput(event, "cardTitle")}
+                />
+              </Grid>
+            )}
+             {isResource && (
+              <Grid item md={4}>
+                <TextField
+                  className={classes.filter__field}
+                  id="filterlocationWorked"
+                  label="Место работы"
+                  variant="outlined"
+                  value={filter.locationWorked}
+                  onChange={(event) => changeInput(event, "locationWorked")}
+                />
+              </Grid>
+            )}
+            {isResource && (
+              <Grid item md={4}>
+                <LocalizationProvider
+                  dateAdapter={AdapterDayjs}
+                  adapterLocale="ru"
+                >
+                  <DatePicker
+                    className={classes.filter__field}
+                    label="Дата"
+                    value={filter.needBefore ? dayjs(filter.endFree) : null}
+                    onChange={(newValue) => changeDate(newValue, "endFree")}
+                  />
+                </LocalizationProvider>
+              </Grid>
+            )}
+            {!isResource && (
+              <Grid item md={4}>
+                <TextField
+                  className={classes.filter__field}
+                  id="filterJobTitle"
+                  label="Заголовок"
+                  variant="outlined"
+                  value={filter.jobTitle}
+                  onChange={(event) => changeInput(event, "jobTitle")}
+                />
+              </Grid>
+            )}
+            {!isResource && (
+              <Grid item md={4}>
+                <TextField
+                  className={classes.filter__field}
+                  id="filterProjectName"
+                  label="Проект"
+                  variant="outlined"
+                  value={filter.projectName}
+                  onChange={(event) => changeInput(event, "projectName")}
+                />
+              </Grid>
+            )}
+            {!isResource && (
+              <Grid item md={4}>
+                <LocalizationProvider
+                  dateAdapter={AdapterDayjs}
+                  adapterLocale="ru"
+                >
+                  <DatePicker
+                    className={classes.filter__field}
+                    label="Дата действия"
+                    value={filter.needBefore ? dayjs(filter.needBefore) : null}
+                    onChange={(newValue) => changeDate(newValue, "needBefore")}
+                  />
+                </LocalizationProvider>
+              </Grid>
+            )}
+
+            <Grid item md={4} marginTop={"1rem"}>
               <TextField
                 className={classes.filter__field}
                 id="filterDescription"
@@ -144,19 +203,7 @@ const Filter: FC<IFilterProps> = ({ cards }) => {
                 )}
               />
             </Grid> */}
-            <Grid item md={4} marginTop={"1rem"}>
-              <LocalizationProvider
-                dateAdapter={AdapterDayjs}
-                adapterLocale="ru"
-              >
-                <DatePicker
-                  className={classes.filter__field}
-                  label="Дата действия"
-                  value={filter.needBefore ? dayjs(filter.needBefore) : null}
-                  onChange={(newValue) => changeDate(newValue, "needBefore")}
-                />
-              </LocalizationProvider>
-            </Grid>
+
             <Grid item md={8}>
               <div className={classes.filter__field}>
                 <CardFormSkills skills={filter.skills} onChange={changeTags} />

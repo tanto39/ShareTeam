@@ -5,9 +5,11 @@ import { IFilter, IFilterSlice } from './../../models/IFilter';
 export const InitialState: IFilterSlice = {
   filter: {
     jobTitle: '',
+    cardTitle: '',
     projectName: '',
     description: '',
     locationWorked: '',
+    endFree: '',
     needBefore: '',
     skills: []
   }
