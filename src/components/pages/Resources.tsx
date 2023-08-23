@@ -1,33 +1,31 @@
 import React from "react";
-import CardList from "../CardList/CardList";
-import { IGetParams } from "../../models/IGetParams";
 import { Typography } from "@mui/material";
-import { cardListLocal } from "../../services/local";
+import { resourceAPI } from "../../services/resourceApi";
+import { useGetParams } from "../../hooks/useGetParams";
+import Loader from "../Loader/Loader";
+import CardMessage from "../CardMessage/CardMessage";
+import { ICustomError } from "../../models/IError";
+import ResourceList from "../ResourceList/ResourceList";
 
 const Resources = () => {
+  const getParams = useGetParams();
 
-  // const fetchCards = async() => {
-  //   const response: Response = await fetch(
-  //     'http://1348377-ch44360.tw1.ru/cards',
-  //     {
-  //       method: 'GET',
-  //       headers: {
-  //         'ContentType': 'application/json',
-  //       }
-  //     });
-  
-  //   const data: any = await response.json();
-  // };
-
-  // fetchCards();
-
+  const {
+    data: resourсes,
+    error: errorGet,
+    isLoading,
+  } = resourceAPI.useFetchResourcesQuery(getParams);
 
   return (
     <div>
+      {isLoading && <Loader />}
+      {errorGet && (
+        <CardMessage severity="error" error={errorGet as ICustomError} />
+      )}
       <Typography variant="h1" fontSize={"2rem"} component="h1" gutterBottom>
         Ресурсы
       </Typography>
-      <CardList cards={cardListLocal} url="/resources"/>
+      {resourсes && <ResourceList resources={resourсes} />}
     </div>
   );
 };

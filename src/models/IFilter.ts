@@ -6,9 +6,11 @@ export interface IFilterSlice {
 
 export interface IFilter {
   jobTitle: string,
+  cardTitle: string,
   description: string
   projectName: string,
   locationWorked: string,
   needBefore: string | null,
+  endFree: string,
   skills: ICardSkill[],
 }

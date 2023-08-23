@@ -17,11 +17,7 @@ export interface ICard {
   needBefore: string,
   skills: ICardSkill[],
   ownerId: number,
-  ownerDetail?: {
-    id: number,
-    lastname: string,
-    firstname: string,
-  }
+  ownerDetail?: IOwnerDetail,
 };
 
 export interface ICardSkill {
@@ -29,6 +25,12 @@ export interface ICardSkill {
   skill: string,
   description?: string,
 };
+
+export interface IOwnerDetail {
+  id: number,
+  lastname: string,
+  firstname: string,
+}
 
 export interface ICardProject {
   id: string,

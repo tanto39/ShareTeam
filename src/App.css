@@ -8,3 +8,11 @@ header a{
   color: #ffffff;
   text-decoration: none;
 }
+.tags{
+  display: flex;
+  flex-wrap: wrap;
+}
+.tags__item{
+  margin: 0.2rem;
+  cursor: pointer;
+}

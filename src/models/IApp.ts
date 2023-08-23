@@ -21,6 +21,7 @@ export interface IUserResult {
   email: string,
   lastname: string,
   nameTeam: string,
+  teamId: number,
   teamDescription: string,
   contacts: [
     {
