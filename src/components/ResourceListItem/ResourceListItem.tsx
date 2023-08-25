@@ -21,7 +21,7 @@ const ResourceListItem: FC<IResourceListItemProps> = ({ resource, onOpen }) => {
 
   return (
     <StyledEngineProvider injectFirst>
-      <Grid item md={4}>
+      <Grid item md={3}>
         <Card
           variant="outlined"
           className={classes.resource}
@@ -45,12 +45,12 @@ const ResourceListItem: FC<IResourceListItemProps> = ({ resource, onOpen }) => {
                 </ListItemIcon>
                 <ListItemText primary="Ранг" secondary={resource.rank} />
               </ListItem>
-              <ListItem>
+              {/* <ListItem>
                 <ListItemIcon>
                   <AssignmentIcon />
                 </ListItemIcon>
                 <ListItemText primary="Место работы" secondary={resource.locationWorked} />
-              </ListItem>
+              </ListItem> */}
               <ListItem>
                 <ListItemIcon>
                   <AssignmentIcon />

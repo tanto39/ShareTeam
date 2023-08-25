@@ -31,7 +31,7 @@ const CardListItem: FC<ICardListItemProps> = ({ card, onOpen }) => {
 
   return (
     <StyledEngineProvider injectFirst>
-      <Grid item md={4}>
+      <Grid item md={3}>
         <Card
           variant="outlined"
           className={classes.card}
@@ -49,12 +49,12 @@ const CardListItem: FC<ICardListItemProps> = ({ card, onOpen }) => {
                   secondary={`${card.ownerDetail?.firstname} ${card.ownerDetail?.lastname}`}
                 />
               </ListItem>
-              <ListItem>
+              {/* <ListItem>
                 <ListItemIcon>
                   <AssignmentIcon />
                 </ListItemIcon>
                 <ListItemText primary="Команда" secondary={team.name} />
-              </ListItem>
+              </ListItem> */}
               <ListItem>
                 <ListItemIcon>
                   <AssignmentIcon />
@@ -67,12 +67,12 @@ const CardListItem: FC<ICardListItemProps> = ({ card, onOpen }) => {
                 </ListItemIcon>
                 <ListItemText primary="Ранг" secondary={card.rank} />
               </ListItem>
-              <ListItem>
+              {/* <ListItem>
                 <ListItemIcon>
                   <AssignmentIcon />
                 </ListItemIcon>
                 <ListItemText primary="Место работы" secondary={card.locationWorked} />
-              </ListItem>
+              </ListItem> */}
               <ListItem>
                 <ListItemIcon>
                   <AssignmentIcon />
